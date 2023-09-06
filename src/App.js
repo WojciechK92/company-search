@@ -1,25 +1,54 @@
-import logo from './logo.svg';
+import { Component } from 'react';
 import './App.css';
+import Layout from './components/Layout/Layout';
+import Header from './components/Header/Header';
+import Menu from './components/Menu/Menu';
+import Companies from './components/Companies/Companies';
+import Footer from './components/Footer/Footer';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+class App extends Component {
+
+  constructor() {
+    super();
+
+    this.state = {
+      companies: [
+        {
+          name: 'Sitaniec Technology',
+          city: 'Zamość',
+          industry: 'Automation',
+          numberOfEmployees: 45,
+          rating: 8,
+        }, 
+        {
+          name: 'Cewar',
+          city: 'Lublin',
+          industry: 'Trade',
+          numberOfEmployees: 87,
+          rating: 6,
+        }, 
+      ]
+    };
+  };
+
+  render() {
+
+    const header = <Header />
+    const content = <Companies companies={this.state.companies}/>
+    const menu = <Menu />
+    const footer = <Footer />
+
+    return (
+      <div>
+        <Layout 
+          header={header}
+          content={content}
+          menu={menu}
+          footer={footer}
+        />
+      </div>
+    );
+  };
+};
 
 export default App;
