@@ -1,6 +1,6 @@
-function Footer() {
+function Footer(props) {
   return (
-    <div className="text-center my-3">Company Search 2023</div>
+    <div className={`text-center my-3 text-${props.theme}`}>Company Search 2023</div>
   );
 };
 

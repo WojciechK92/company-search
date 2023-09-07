@@ -6,6 +6,10 @@ import Menu from './components/Menu/Menu';
 import Companies from './components/Companies/Companies';
 import Footer from './components/Footer/Footer';
 import SearchBar from './components/UI/SearchBar/SearchBar';
+import ThemeButton from './components/UI/ThemeButton/ThemeButton';
+
+
+    
 
 const backendCompanies= [
   {
@@ -35,12 +39,13 @@ const backendCompanies= [
 ];
 
 class App extends Component {
-
+  
   constructor() {
     super();
-
+    
     this.state = {
       companies: backendCompanies,
+      theme: 'primary',
     };
   };
 
@@ -49,16 +54,26 @@ class App extends Component {
     this.setState({companies});
   };
 
+  changeTheme() {
+    const theme = (this.state.theme === 'primary') ? 'warning' : 'primary';
+    this.setState({ theme });
+  };
+  
   render() {
 
     const header = (
       <Header>
         <SearchBar onSearch={(term) => this.search(term)}/>
+        <ThemeButton onChange={() => this.changeTheme()}/>
       </Header>
-    )
-    const content = <Companies companies={this.state.companies}/>
+    );
+   const content = (
+     <Companies 
+      companies={this.state.companies}
+      theme={this.state.theme}/>
+   );
     const menu = <Menu />
-    const footer = <Footer />
+    const footer = <Footer theme={this.state.theme}/>
 
     return (
       <div className='app'>
