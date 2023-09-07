@@ -2,5 +2,7 @@
   background-image: url(../../assets/header.jpg);
   background-size: cover;
   background-position: center;
-  height: 380px;
+  display: flex;
+  justify-content: center;
+  padding-block: 150px;
 }
