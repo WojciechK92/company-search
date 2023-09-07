@@ -1,4 +1,10 @@
+import { useContext } from 'react';
+import ThemeContext from '../../../context/themeContext';
+
 function Company(props) {
+
+  const { color } = useContext(ThemeContext);
+
   return (
     <div className='card mx-1 my-3 bg-light'>
       <div className='card-body'>
@@ -25,7 +31,7 @@ function Company(props) {
                 <p>Industry: {props.industry}</p>
               </div>
               <div className='col-12 col-md-5 text-end align-self-end'>
-                <a href="#" className={`btn btn-${props.theme} px-4 py-2`}>Open</a> 
+                <a href="#" className={`btn btn-${color} px-4 py-2`}>Open</a> 
               </div>
             </div>
           </div>

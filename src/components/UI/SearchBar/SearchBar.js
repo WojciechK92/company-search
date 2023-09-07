@@ -1,8 +1,10 @@
+import { useState, useContext } from 'react';
 import styles from './SearchBar.module.css';
-import { useState } from 'react';
+import ThemeContext from '../../../context/themeContext';
 
 function SearchBar(props) {
   const [term, setTerm] = useState('');
+  const { color } = useContext(ThemeContext);
 
   const search = () => {
     props.onSearch(term);
@@ -13,7 +15,7 @@ function SearchBar(props) {
   };
 
   return (
-    <div className={`form-group w-50 ${styles.searchBar}`}>
+    <div className={`form-group w-50 me-1 ${styles.searchBar}`}>
       <input 
         value={term}
         onChange={e => setTerm(e.target.value)}
@@ -23,7 +25,7 @@ function SearchBar(props) {
         className='form-control' />
       <button 
         onClick={search}
-        className='btn btn-primary'>
+        className={`btn btn-${color}`}>
           Search
       </button>
     </div>

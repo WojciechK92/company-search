@@ -7,9 +7,7 @@ import Companies from './components/Companies/Companies';
 import Footer from './components/Footer/Footer';
 import SearchBar from './components/UI/SearchBar/SearchBar';
 import ThemeButton from './components/UI/ThemeButton/ThemeButton';
-
-
-    
+import ThemeContext from './context/themeContext';
 
 const backendCompanies= [
   {
@@ -49,6 +47,8 @@ class App extends Component {
     };
   };
 
+  static contextType = ThemeContext;
+
   search(term) {
     const companies = backendCompanies.filter(company => company.name.toLowerCase().includes(term.toLowerCase())); 
     this.setState({companies});
@@ -64,25 +64,28 @@ class App extends Component {
     const header = (
       <Header>
         <SearchBar onSearch={(term) => this.search(term)}/>
-        <ThemeButton onChange={() => this.changeTheme()}/>
+        <ThemeButton />
       </Header>
     );
-   const content = (
-     <Companies 
-      companies={this.state.companies}
-      theme={this.state.theme}/>
-   );
+    const content = (
+      <Companies companies={this.state.companies} />
+    );
     const menu = <Menu />
-    const footer = <Footer theme={this.state.theme}/>
+    const footer = <Footer />
 
     return (
       <div className='app'>
-        <Layout 
-          header={header}
-          content={content}
-          menu={menu}
-          footer={footer}
-        />
+        <ThemeContext.Provider value={{
+          color: this.state.theme,
+          onChange: () => this.changeTheme(),
+        }}>
+          <Layout 
+            header={header}
+            content={content}
+            menu={menu}
+            footer={footer}
+            />
+        </ThemeContext.Provider>
       </div>
     );
   };

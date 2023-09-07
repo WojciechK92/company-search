@@ -1,7 +1,12 @@
+import { useContext } from 'react';
+import ThemeContext from '../../../context/themeContext';
+
 function ThemeButton(props) {
 
+  const { onChange } = useContext(ThemeContext);
+
   const changeTheme = () => {
-    props.onChange();
+    onChange();
   };  
 
   return (

@@ -1,6 +1,12 @@
+import { useContext } from 'react';
+import ThemeContext from '../../context/themeContext';
+
 function Footer(props) {
+
+  const { color } = useContext(ThemeContext);
+
   return (
-    <div className={`text-center my-3 text-${props.theme}`}>Company Search 2023</div>
+    <div className={`text-center my-3 text-${color}`}>Company Search 2023</div>
   );
 };
 
