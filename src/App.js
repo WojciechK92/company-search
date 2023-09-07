@@ -14,18 +14,20 @@ class App extends Component {
     this.state = {
       companies: [
         {
+          id: 1,
           name: 'Sitaniec Technology',
           city: 'Zamość',
           industry: 'Automation',
-          numberOfEmployees: 45,
-          rating: 8,
+          employees: 45,
+          rating: 8.8,
         }, 
         {
+          id: 2,
           name: 'Cewar',
           city: 'Lublin',
           industry: 'Trade',
-          numberOfEmployees: 87,
-          rating: 6,
+          employees: 87,
+          rating: 6.2,
         }, 
       ]
     };
@@ -39,7 +41,7 @@ class App extends Component {
     const footer = <Footer />
 
     return (
-      <div>
+      <div className='app'>
         <Layout 
           header={header}
           content={content}

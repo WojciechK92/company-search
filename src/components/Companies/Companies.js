@@ -4,10 +4,9 @@ import Company from './Company/Company';
 class Companies extends Component {
   render() {
     return (
-      <div>
-        Companies
+      <div className='container-fluid'>
         {this.props.companies.map(company => 
-          <Company {...company}/> 
+          <Company key={company.id} {...company}/> 
         )}
       </div>
     );
