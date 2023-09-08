@@ -1,5 +1,6 @@
 import { useState, useContext } from 'react';
 import styles from './SearchBar.module.css';
+import PropTypes from 'prop-types';
 import ThemeContext from '../../../context/themeContext';
 
 function SearchBar(props) {
@@ -30,6 +31,10 @@ function SearchBar(props) {
       </button>
     </div>
   );
+};
+
+SearchBar.propTypes = {
+  onSearch: PropTypes.func.isRequired,
 };
 
 export default SearchBar;

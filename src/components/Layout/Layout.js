@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 const Layout = (props) => {
   return (
     <div>
@@ -7,6 +9,13 @@ const Layout = (props) => {
       <div>{props.footer}</div>
     </div>
   );
+};
+
+Layout.propTypes = {
+  header: PropTypes.object.isRequired,
+  menu: PropTypes.object.isRequired,
+  content: PropTypes.object.isRequired,
+  footer: PropTypes.object.isRequired,
 };
 
 export default Layout;

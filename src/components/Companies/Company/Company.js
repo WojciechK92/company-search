@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import PropTypes from 'prop-types';
 import ThemeContext from '../../../context/themeContext';
 
 function Company(props) {
@@ -39,6 +40,14 @@ function Company(props) {
       </div>
     </div>
   );
+};
+
+Company.propTypes = {
+  name: PropTypes.string.isRequired,
+  city: PropTypes.string.isRequired,
+  rating: PropTypes.number.isRequired,
+  employees: PropTypes.number.isRequired,
+  industry: PropTypes.string.isRequired,
 };
 
 export default Company;

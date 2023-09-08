@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import PropTypes from 'prop-types';
 import Company from './Company/Company';
 
 class Companies extends Component {
@@ -11,6 +12,10 @@ class Companies extends Component {
       </div>
     );
   };
+};
+
+Companies.propTypes = {
+  companies: PropTypes.array.isRequired,
 };
 
 export default Companies;

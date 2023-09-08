@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import ThemeContext from '../../../context/themeContext';
 
-function ThemeButton(props) {
+function ThemeButton() {
 
   const { onChange } = useContext(ThemeContext);
 
