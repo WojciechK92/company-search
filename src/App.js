@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useReducer } from 'react';
 import './App.css';
 import Layout from './components/Layout/Layout';
 import Header from './components/Header/Header';
@@ -10,6 +10,7 @@ import ThemeButton from './components/UI/ThemeButton/ThemeButton';
 import LoadingIcon from './components/UI/LoadingIcon/LoadingIcon';
 import ThemeContext from './context/themeContext';
 import AuthContext from './context/authContext';
+import { reducer, initialState } from './reducer';
 
 const backendCompanies = [
   {
@@ -40,30 +41,16 @@ const backendCompanies = [
 
 function App() {
 
-  const [state, setState] = useState({
-    companies: backendCompanies,
-    isAuthenticated: false,
-    theme: 'primary',
-
-  });
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   const search = (term) => {
     const companies = backendCompanies.filter(company => company.name.toLowerCase().includes(term.toLowerCase())); 
-    setState({...state, companies});
+    dispatch({ type: 'setCompanies', companies })
   };
 
-  const changeTheme = () => {
-    const theme = (state.theme === 'primary') ? 'warning' : 'primary';
-    setState({...state, theme });
-  };
-
-  const login = () => {
-    setState({...state, isAuthenticated: true })
-  };
-
-  const logout = () => {
-    setState({...state, isAuthenticated: false })
-  };
+  useEffect(() => {
+    dispatch({ type: 'setCompanies', companies: backendCompanies })
+  }, []);
 
   const header = (
     <Header>
@@ -81,12 +68,12 @@ function App() {
     <div className='app'>
       <AuthContext.Provider value={{
         isAuthenticated: state.isAuthenticated,
-        login: () => login(),
-        logout: () => logout(),
+        login: () => dispatch({ type: 'login' }),
+        logout: () => dispatch({ type: 'logout' }),
       }}>
         <ThemeContext.Provider value={{
           color: state.theme,
-          onChange: () => changeTheme(),
+          onChange: () => dispatch({ type: 'change-theme' }),
         }}>
           <Layout 
             header={header}
