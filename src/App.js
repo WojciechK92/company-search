@@ -1,6 +1,5 @@
 import { Component } from 'react';
 import './App.css';
-import ThemeContext from './context/themeContext';
 import Layout from './components/Layout/Layout';
 import Header from './components/Header/Header';
 import Menu from './components/Menu/Menu';
@@ -9,8 +8,10 @@ import Footer from './components/Footer/Footer';
 import SearchBar from './components/UI/SearchBar/SearchBar';
 import ThemeButton from './components/UI/ThemeButton/ThemeButton';
 import LoadingIcon from './components/UI/LoadingIcon/LoadingIcon';
+import ThemeContext from './context/themeContext';
+import AuthContext from './context/authContext';
 
-const backendCompanies= [
+const backendCompanies = [
   {
     id: 1,
     name: 'Sitaniec Technology',
@@ -34,7 +35,7 @@ const backendCompanies= [
     industry: 'Production',
     employees: 89,
     rating: 5.9,
-  }, , 
+  }, 
 ];
 
 class App extends Component {
@@ -45,11 +46,10 @@ class App extends Component {
     this.state = {
       companies: backendCompanies,
       loading: true,
+      isAuthenticated: false,
       theme: 'primary',
     };
   };
-
-  static contextType = ThemeContext;
 
   search(term) {
     const companies = backendCompanies.filter(company => company.name.toLowerCase().includes(term.toLowerCase())); 
@@ -65,6 +65,14 @@ class App extends Component {
     setTimeout(() => {
       this.setState({ loading: false });
     }, 1000);
+  };
+
+  login() {
+    this.setState({ isAuthenticated: true })
+  };
+
+  logout() {
+    this.setState({ isAuthenticated: false })
   };
   
   render() {
@@ -83,17 +91,23 @@ class App extends Component {
 
     return (
       <div className='app'>
-        <ThemeContext.Provider value={{
-          color: this.state.theme,
-          onChange: () => this.changeTheme(),
+        <AuthContext.Provider value={{
+          isAuthenticated: this.state.isAuthenticated,
+          login: () => this.login(),
+          logout: () => this.logout(),
         }}>
-          <Layout 
-            header={header}
-            content={content}
-            menu={menu}
-            footer={footer}
-            />
-        </ThemeContext.Provider>
+          <ThemeContext.Provider value={{
+            color: this.state.theme,
+            onChange: () => this.changeTheme(),
+          }}>
+            <Layout 
+              header={header}
+              content={content}
+              menu={menu}
+              footer={footer}
+              />
+          </ThemeContext.Provider>
+        </AuthContext.Provider>
       </div>
     );
   };

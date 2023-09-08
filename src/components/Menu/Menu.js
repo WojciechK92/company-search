@@ -1,4 +1,20 @@
+import { useContext } from 'react';
+import AuthContext from "../../context/authContext";
+
 const Menu = () => {
+
+  const auth = useContext(AuthContext);
+
+  const login = (e) => {
+    e.preventDefault();
+    auth.login();
+  };
+
+  const logout = (e) => {
+    e.preventDefault();
+    auth.logout();
+  };
+
   return (
     <nav className="navbar navbar-expand-md bg-body-tertiary">
       <div className="container-fluid ms-3">
@@ -16,17 +32,29 @@ const Menu = () => {
             <li className="nav-item">
               <a className="nav-link active" aria-current="page" href="#">Home</a>
             </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">My profile </a>
-            </li>
+            {auth.isAuthenticated
+              ? <li className="nav-item">
+                  <a className="nav-link" href="#">My profile </a>
+                </li>
+              : null
+            }
           </ul>
           <ul className="navbar-nav gap-md-4 me-md-4">
-            <li className="nav-item">
-              <a className="nav-link" href="#">Log in</a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">Register</a>
-            </li>
+            {auth.isAuthenticated 
+              ? (
+                <li className="nav-item">
+                  <a className="nav-link" href="#" onClick={logout}>Log out</a>
+                </li>
+              ) : (
+                <>
+                  <li className="nav-item">
+                    <a className="nav-link" href="#" onClick={login}>Log in</a>
+                  </li>
+                  <li className="nav-item">
+                    <a className="nav-link" href="#">Register</a>
+                  </li>
+                </>
+              )}
           </ul>
         </div>
       </div>
