@@ -1,21 +1,33 @@
 import useAuth from '../../hooks/useAuth';
+import PropTypes from 'prop-types';
+import withMouseEffect from '../../hoc/withMouseEffect';
 
-const Menu = () => {
+const Menu = (props) => {
 
   const [auth, setAuth] = useAuth();
-
+  
   const login = (e) => {
     e.preventDefault();
     setAuth(true);
   };
-
+  
   const logout = (e) => {
     e.preventDefault();
     setAuth(false);
   };
 
+  const innerWidth = window.innerWidth;
+  const number = innerWidth/100;
+  const valueX = Math.floor(0 + props.mouseX/number);
+  const background = {
+    background: `rgb(240,240,240)`,
+    background: `linear-gradient(35deg, rgba(240,240,240,1) ${valueX}%, rgba(190,190,190,1) 100%)`,
+  };
+  
+  console.log(innerWidth, valueX);
+
   return (
-    <nav className="navbar navbar-expand-md bg-body-tertiary">
+    <nav style={background} className='navbar navbar-expand-md bg-body-tertiary' >
       <div className="container-fluid ms-3">
         <a className="navbar-brand" href="#">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className="bi bi-buildings" viewBox="0 0 16 16">
@@ -61,4 +73,9 @@ const Menu = () => {
   );
 };
 
-export default Menu;
+Menu.propTypes = {
+  mouseX: PropTypes.any.isRequired,
+  mouseY: PropTypes.any,
+}
+
+export default withMouseEffect(Menu);

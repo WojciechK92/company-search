@@ -5,7 +5,9 @@ function Companies(props) {
   return (
     <div className='container-fluid'>
       {props.companies.map(company => 
-        <Company key={company.id} {...company} /> 
+        <Company 
+          {...company}
+          key={company.id} /> 
       )}
     </div>
   );
