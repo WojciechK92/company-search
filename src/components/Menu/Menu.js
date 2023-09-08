@@ -1,18 +1,17 @@
-import { useContext } from 'react';
-import AuthContext from "../../context/authContext";
+import useAuth from '../../hooks/useAuth';
 
 const Menu = () => {
 
-  const auth = useContext(AuthContext);
+  const [auth, setAuth] = useAuth();
 
   const login = (e) => {
     e.preventDefault();
-    auth.login();
+    setAuth(true);
   };
 
   const logout = (e) => {
     e.preventDefault();
-    auth.logout();
+    setAuth(false);
   };
 
   return (
@@ -32,7 +31,7 @@ const Menu = () => {
             <li className="nav-item">
               <a className="nav-link active" aria-current="page" href="#">Home</a>
             </li>
-            {auth.isAuthenticated
+            {auth
               ? <li className="nav-item">
                   <a className="nav-link" href="#">My profile </a>
                 </li>
@@ -40,7 +39,7 @@ const Menu = () => {
             }
           </ul>
           <ul className="navbar-nav gap-md-4 me-md-4">
-            {auth.isAuthenticated 
+            {auth 
               ? (
                 <li className="nav-item">
                   <a className="nav-link" href="#" onClick={logout}>Log out</a>
