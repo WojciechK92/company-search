@@ -49,7 +49,10 @@ function App() {
   };
 
   useEffect(() => {
-    dispatch({ type: 'setCompanies', companies: backendCompanies })
+    setTimeout(() => {
+      dispatch({ type: 'setCompanies', companies: backendCompanies })
+      dispatch({ type: 'setLoading' }); 
+    }, 1000);
   }, []);
 
   const header = (
@@ -58,8 +61,9 @@ function App() {
       <ThemeButton />
     </Header>
   );
-  const content = (
-    <Companies companies={state.companies} />
+  const content = ( state.loading 
+    ? <LoadingIcon />
+    : <Companies companies={state.companies} />
   );
   const menu = <Menu />
   const footer = <Footer />
