@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import './App.css';
+import ThemeContext from './context/themeContext';
 import Layout from './components/Layout/Layout';
 import Header from './components/Header/Header';
 import Menu from './components/Menu/Menu';
@@ -7,7 +8,7 @@ import Companies from './components/Companies/Companies';
 import Footer from './components/Footer/Footer';
 import SearchBar from './components/UI/SearchBar/SearchBar';
 import ThemeButton from './components/UI/ThemeButton/ThemeButton';
-import ThemeContext from './context/themeContext';
+import LoadingIcon from './components/UI/LoadingIcon/LoadingIcon';
 
 const backendCompanies= [
   {
@@ -43,6 +44,7 @@ class App extends Component {
     
     this.state = {
       companies: backendCompanies,
+      loading: true,
       theme: 'primary',
     };
   };
@@ -58,6 +60,12 @@ class App extends Component {
     const theme = (this.state.theme === 'primary') ? 'warning' : 'primary';
     this.setState({ theme });
   };
+
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({ loading: false });
+    }, 1000);
+  };
   
   render() {
 
@@ -67,9 +75,9 @@ class App extends Component {
         <ThemeButton />
       </Header>
     );
-    const content = (
-      <Companies companies={this.state.companies} />
-    );
+    const content = this.state.loading 
+      ? <LoadingIcon />
+      : <Companies companies={this.state.companies} />
     const menu = <Menu />
     const footer = <Footer />
 
