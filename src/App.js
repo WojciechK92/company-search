@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import './App.css';
 import Layout from './components/Layout/Layout';
 import Header from './components/Header/Header';
@@ -38,79 +38,66 @@ const backendCompanies = [
   }, 
 ];
 
-class App extends Component {
-  
-  constructor() {
-    super();
-    
-    this.state = {
-      companies: backendCompanies,
-      loading: true,
-      isAuthenticated: false,
-      theme: 'primary',
-    };
-  };
+function App() {
 
-  search(term) {
+  const [state, setState] = useState({
+    companies: backendCompanies,
+    isAuthenticated: false,
+    theme: 'primary',
+
+  });
+
+  const search = (term) => {
     const companies = backendCompanies.filter(company => company.name.toLowerCase().includes(term.toLowerCase())); 
-    this.setState({companies});
+    setState({...state, companies});
   };
 
-  changeTheme() {
-    const theme = (this.state.theme === 'primary') ? 'warning' : 'primary';
-    this.setState({ theme });
+  const changeTheme = () => {
+    const theme = (state.theme === 'primary') ? 'warning' : 'primary';
+    setState({...state, theme });
   };
 
-  componentDidMount() {
-    setTimeout(() => {
-      this.setState({ loading: false });
-    }, 1000);
+  const login = () => {
+    setState({...state, isAuthenticated: true })
   };
 
-  login() {
-    this.setState({ isAuthenticated: true })
+  const logout = () => {
+    setState({...state, isAuthenticated: false })
   };
 
-  logout() {
-    this.setState({ isAuthenticated: false })
-  };
-  
-  render() {
+  const header = (
+    <Header>
+      <SearchBar onSearch={(term) => search(term)}/>
+      <ThemeButton />
+    </Header>
+  );
+  const content = (
+    <Companies companies={state.companies} />
+  );
+  const menu = <Menu />
+  const footer = <Footer />
 
-    const header = (
-      <Header>
-        <SearchBar onSearch={(term) => this.search(term)}/>
-        <ThemeButton />
-      </Header>
-    );
-    const content = this.state.loading 
-      ? <LoadingIcon />
-      : <Companies companies={this.state.companies} />
-    const menu = <Menu />
-    const footer = <Footer />
-
-    return (
-      <div className='app'>
-        <AuthContext.Provider value={{
-          isAuthenticated: this.state.isAuthenticated,
-          login: () => this.login(),
-          logout: () => this.logout(),
+  return (
+    <div className='app'>
+      <AuthContext.Provider value={{
+        isAuthenticated: state.isAuthenticated,
+        login: () => login(),
+        logout: () => logout(),
+      }}>
+        <ThemeContext.Provider value={{
+          color: state.theme,
+          onChange: () => changeTheme(),
         }}>
-          <ThemeContext.Provider value={{
-            color: this.state.theme,
-            onChange: () => this.changeTheme(),
-          }}>
-            <Layout 
-              header={header}
-              content={content}
-              menu={menu}
-              footer={footer}
-              />
-          </ThemeContext.Provider>
-        </AuthContext.Provider>
-      </div>
-    );
-  };
+          <Layout 
+            header={header}
+            content={content}
+            menu={menu}
+            footer={footer}
+            />
+        </ThemeContext.Provider>
+      </AuthContext.Provider>
+    </div>
+  );
 };
 
 export default App;
