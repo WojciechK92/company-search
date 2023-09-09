@@ -11,6 +11,7 @@ import LoadingIcon from './components/UI/LoadingIcon/LoadingIcon';
 import ThemeContext from './context/themeContext';
 import AuthContext from './context/authContext';
 import { reducer, initialState } from './reducer';
+import CheaperRegistration from './components/CheaperRegistration/CheaperRegistration';
 
 const backendCompanies = [
   {
@@ -63,7 +64,10 @@ function App() {
   );
   const content = ( state.loading 
     ? <LoadingIcon />
-    : <Companies companies={state.companies} />
+    : <>
+        <CheaperRegistration />
+        <Companies companies={state.companies} />
+      </>
   );
   const menu = <Menu />
   const footer = <Footer />

@@ -24,8 +24,6 @@ const Menu = (props) => {
     background: `linear-gradient(35deg, rgba(240,240,240,1) ${valueX}%, rgba(190,190,190,1) 100%)`,
   };
   
-  console.log(innerWidth, valueX);
-
   return (
     <nav style={background} className='navbar navbar-expand-md bg-body-tertiary' >
       <div className="container-fluid ms-3">
