@@ -12,6 +12,8 @@ import ThemeContext from './context/themeContext';
 import AuthContext from './context/authContext';
 import { reducer, initialState } from './reducer';
 import CheaperRegistration from './components/CheaperRegistration/CheaperRegistration';
+import useStateStorage from './hooks/useStateStorage';
+import LastCompany from './components/Companies/LastCompany/LastCompany';
 
 const backendCompanies = [
   {
@@ -43,10 +45,15 @@ const backendCompanies = [
 function App() {
 
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [lastCompany, setLastCompany] = useStateStorage('last-company', null);
 
   const search = (term) => {
     const companies = backendCompanies.filter(company => company.name.toLowerCase().includes(term.toLowerCase())); 
     dispatch({ type: 'setCompanies', companies })
+  };
+
+  const lastCompanyOpened = (lastCompany) => {
+    setLastCompany(lastCompany); 
   };
 
   useEffect(() => {
@@ -66,7 +73,10 @@ function App() {
     ? <LoadingIcon />
     : <>
         <CheaperRegistration />
-        <Companies companies={state.companies} />
+        {lastCompany ? <LastCompany company={lastCompany} /> : null}
+        <Companies 
+          companies={state.companies} 
+          onOpen={lastCompanyOpened} />
       </>
   );
   const menu = <Menu />
