@@ -6,6 +6,11 @@ function Company(props) {
 
   const { color } = useContext(ThemeContext);
 
+  const clickHandler = (e) => {
+    e.preventDefault();
+    props.onOpen(props);
+  };
+
   return (
     <div className='card mx-1 my-3 bg-light'>
       <div className='card-body'>
@@ -32,7 +37,10 @@ function Company(props) {
                 <p>Industry: {props.industry}</p>
               </div>
               <div className='col-12 col-md-5 text-end align-self-end'>
-                <a href="#" className={`btn btn-${color} px-4 py-2`}>Open</a> 
+                <a 
+                  onClick={clickHandler}
+                  href="#" 
+                  className={`btn btn-${color} px-4 py-2`}>Open</a> 
               </div>
             </div>
           </div>
@@ -48,6 +56,7 @@ Company.propTypes = {
   rating: PropTypes.number.isRequired,
   employees: PropTypes.number.isRequired,
   industry: PropTypes.string.isRequired,
+  onOpen: PropTypes.func.isRequired,
 };
 
 export default Company;
