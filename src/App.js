@@ -54,6 +54,9 @@ function App() {
   const lastCompanyOpened = (lastCompany) => {
     setLastCompany(lastCompany); 
   };
+  const removeLastCompany = () => {
+    setLastCompany(null);
+  };
 
   useEffect(() => {
     setTimeout(() => {
@@ -71,7 +74,9 @@ function App() {
   const content = ( state.loading 
     ? <LoadingIcon />
     : <>
-        {lastCompany ? <LastCompany company={lastCompany} /> : null}
+        {lastCompany 
+          ? <LastCompany lastCompany={lastCompany} onRemove={removeLastCompany} /> 
+          : null}
         <Companies 
           companies={state.companies} 
           onOpen={lastCompanyOpened} />
