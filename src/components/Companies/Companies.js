@@ -3,7 +3,7 @@ import Company from './Company/Company';
 
 function Companies(props) {
   return (
-    <div className='container-fluid'>
+    <div>
       {props.companies.map(company => 
         <Company key={company.id} {...company} onOpen={props.onOpen} /> 
       )}

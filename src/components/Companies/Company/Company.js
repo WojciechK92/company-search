@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import ThemeContext from '../../../context/themeContext';
 
@@ -6,13 +7,12 @@ function Company(props) {
 
   const { color } = useContext(ThemeContext);
 
-  const clickHandler = (e) => {
-    e.preventDefault();
+  const clickHandler = () => {
     props.onOpen(props);
   };
 
   return (
-    <div className='card mx-1 my-3 bg-light'>
+    <div className='card mb-3 bg-light'>
       <div className='card-body'>
         <div className='row'>
           <div className='col-5 col-md-4 align-self-center'>
@@ -37,10 +37,10 @@ function Company(props) {
                 <p>Industry: {props.industry}</p>
               </div>
               <div className='col-12 col-md-5 text-end align-self-end'>
-                <a 
+                <Link 
                   onClick={clickHandler}
-                  href="#" 
-                  className={`btn btn-${color} px-4 py-2`}>Open</a> 
+                  to={`/companies/${props.id}`} 
+                  className={`btn btn-${color} px-4 py-2`}>Open</Link> 
               </div>
             </div>
           </div>

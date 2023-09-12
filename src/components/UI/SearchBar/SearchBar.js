@@ -1,14 +1,15 @@
 import { useState, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import styles from './SearchBar.module.css';
-import PropTypes from 'prop-types';
 import ThemeContext from '../../../context/themeContext';
 
-function SearchBar(props) {
+function SearchBar() {
   const [term, setTerm] = useState('');
   const { color } = useContext(ThemeContext);
+  const history = useHistory();
 
   const search = () => {
-    props.onSearch(term);
+    term ? history.push(`/search/${term}`) : history.push('/');
   };
 
   const enterKeyHandler = (e) => {
@@ -31,10 +32,6 @@ function SearchBar(props) {
       </button>
     </div>
   );
-};
-
-SearchBar.propTypes = {
-  onSearch: PropTypes.func.isRequired,
 };
 
 export default SearchBar;

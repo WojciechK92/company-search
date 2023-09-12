@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Timer from '../Other/Timer/Timer';
 
-function CheaperRegistration() {
+function SpecilOffer() {
   const [timer, setTimer] = useState(true);
 
   const resetTimer = () => {
@@ -10,7 +10,7 @@ function CheaperRegistration() {
 
   if (timer) {
     return (
-      <div className='card my-3 mx-3 text-center'>
+      <div className='card mb-3 text-center'>
         <div className='card-header h4 bg-warning'>Special offer for you!</div>
         <div className='card-body'>
           <p>You stil have time to register with a 25% discount:</p>
@@ -24,4 +24,4 @@ function CheaperRegistration() {
 
 };
 
-export default CheaperRegistration;
+export default SpecilOffer;

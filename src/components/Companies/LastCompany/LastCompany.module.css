@@ -1,0 +1,9 @@
+.lastCompany {
+  width: 180px;
+}
+
+@media (min-width: 768px) {
+  .lastCompany {
+    width: 250px;
+  }
+}

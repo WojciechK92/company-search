@@ -3,11 +3,6 @@ export const reducer = (state, action) => {
     case 'change-theme':
       const theme = state.theme === 'primary' ? 'warning' : 'primary';
       return { ...state, theme };
-    case 'setCompanies':
-      const companies = action.companies;
-      return { ...state, companies };
-    case 'setLoading':
-      return { ...state, loading: false };
     case 'login':
       return { ...state, isAuthenticated: true };
     case 'logout':
@@ -18,8 +13,6 @@ export const reducer = (state, action) => {
 };
 
 export const initialState = {
-  companies: [],
-  isAuthenticated: false,
-  loading: true,
-  theme: 'primary',
+  isAuthenticated: true,
+  theme: 'warning',
 };
