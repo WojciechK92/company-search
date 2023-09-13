@@ -7,11 +7,6 @@ const Menu = (props) => {
 
   const [auth, setAuth] = useAuth();
   
-  const login = (e) => {
-    e.preventDefault();
-    setAuth(true);
-  };
-  
   const logout = (e) => {
     e.preventDefault();
     setAuth(false);
@@ -57,10 +52,10 @@ const Menu = (props) => {
               ) : (
                 <>
                   <li className="nav-item">
-                    <a className="nav-link" href="#" onClick={login}>Log in</a>
+                    <NavLink className="nav-link" to="/login">Log in</NavLink>
                   </li>
                   <li className="nav-item">
-                    <a className="nav-link" href="#">Register</a>
+                    <NavLink className="nav-link" to="/register">Register</NavLink>
                   </li>
                 </>
               )}

@@ -16,6 +16,9 @@ import Company from './pages/Company/Company';
 import Search from './pages/Search/Search';
 import NotFound from './pages/NotFound/NotFound';
 import ErrorBoundary from './hoc/ErrorBoundary';
+import Login from './pages/Auth/Login';
+import Register from './pages/Auth/Register';
+import AddCompany from './pages/Company/AddCompany/AddCompany';
 const Profile = lazy(() => import('./pages/Profile/Profile'));
 
 function App() {
@@ -32,7 +35,10 @@ function App() {
     <ErrorBoundary>
       <Suspense fallback={<div>Loading...</div>}>
         <Switch>
+          <AuthenticatedRoute path='/profile/companies/add' component={AddCompany} />
           <AuthenticatedRoute path='/profile' component={Profile} />
+          <Route path='/register' component={Register} />
+          <Route path='/login' component={Login} />
           <Route path='/search' exact component={Search} />
           <Route path='/companies/:id' component={Company} />
           <Route path='/' exact component={Home} />

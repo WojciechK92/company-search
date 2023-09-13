@@ -11,7 +11,7 @@ function AuthenticatedRoute(props) {
 };
 
 AuthenticatedRoute.propTypes = {
-  component: PropTypes.object.isRequired,
+  component: PropTypes.any.isRequired,
   path: PropTypes.string.isRequired,
 };
 

@@ -5,7 +5,7 @@ const MyCompanies = () => {
   return (
     <div>
       <p>Your list is empty!</p>
-      <LinkButton to='/companies/create'>Create</LinkButton>
+      <LinkButton to='/profile/companies/add'>Create</LinkButton>
     </div>
   );
 };
