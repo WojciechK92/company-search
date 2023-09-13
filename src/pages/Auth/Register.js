@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import LoadingButton from "../../components/UI/LoadingButton/LoadingButton";
+import { useHistory, Redirect } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
-
+import AuthForm from './AuthForm';
 
 function Register() {
 
@@ -11,8 +10,7 @@ function Register() {
   const history = useHistory();
   
 
-  const submit = (e) => {
-    e.preventDefault();
+  const submit = () => {
     setLoading(true);
 
     setTimeout(() => {
@@ -21,24 +19,13 @@ function Register() {
     }, 500);
   };
 
-  return (
-    <div className='card'>
-      <div className='card-body'>
-        <h2 className='mb-4'>Registration</h2>
-        <form onSubmit={submit}>
-          <div className='mb-3'>
-            <label className='form-label'>Email</label>
-            <input type='email' className='form-control' />
-          </div>
-          <div className='mb-3'>
-            <label className='form-label'>Password</label>
-            <input type='password' className='form-control' />
-          </div>
-          <LoadingButton loading={loading}>Register</LoadingButton>
-        </form>
-      </div>
-    </div>
-  );
+  return auth 
+    ? <Redirect to='/' /> 
+    : <AuthForm 
+        header='Registration' 
+        buttonName='Register'
+        loading={loading} 
+        onSubmit={submit} />
 };
 
 export default Register;
