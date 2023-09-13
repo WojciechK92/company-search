@@ -1,6 +1,23 @@
+import { useState } from 'react';
+import LoadingButton from '../../../components/UI/LoadingButton/LoadingButton';
+
 const ProfileDetails = () => {
+
+  const [loading, setLoading] = useState(false);
+
+  const submit = (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    setTimeout(() => {
+      //saving
+      setLoading(false);
+    }, 500);
+
+  };
+
   return (
-    <form>
+    <form onSubmit={submit}>
       <div className='mb-3'>
         <label className='form-label'>Email</label>
         <input type='email' className='form-control' />
@@ -9,7 +26,7 @@ const ProfileDetails = () => {
         <label className='form-label'>Password</label>
         <input type='password' className='form-control' />
       </div>
-      <button className='btn btn-primary px-4 py-2 mt-3'>Save</button>
+      <LoadingButton loading={loading}>Save</LoadingButton>
     </form>
     
   );

@@ -79,7 +79,6 @@ function Timer(props) {
           </tr>
         </tbody>
       </table>
-      <a href="#" className={`btn btn-${color}`}>Register</a>
     </div>
     );
     

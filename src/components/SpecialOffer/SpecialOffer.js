@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Timer from '../Other/Timer/Timer';
+import LinkButton from '../UI/LinkButton/LinkButton';
 
 function SpecilOffer() {
   const [timer, setTimer] = useState(true);
@@ -15,6 +16,7 @@ function SpecilOffer() {
         <div className='card-body'>
           <p>You stil have time to register with a 25% discount:</p>
           <Timer hours={0} minutes={0} seconds={15} reset={resetTimer} />
+          <LinkButton to='/register'>Register</LinkButton>
         </div>
       </div>
     );
