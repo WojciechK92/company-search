@@ -1,4 +1,4 @@
-import { useReducer } from 'react';
+import { useReducer, lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import AuthenticatedRoute from './hoc/AuthenticatedRoute';
 import './App.css';
@@ -12,10 +12,10 @@ import ThemeContext from './context/themeContext';
 import AuthContext from './context/authContext';
 import { reducer, initialState } from './reducer';
 import Home from './pages/Home/Home';
-import Profile from './pages/Profile/Profile';
 import Company from './pages/Company/Company';
 import Search from './pages/Search/Search';
 import NotFound from './pages/NotFound/NotFound';
+const Profile = lazy(() => import('./pages/Profile/Profile'));
 
 function App() {
 
@@ -28,13 +28,15 @@ function App() {
     </Header>
   );
   const content = ( 
-    <Switch>
-      <AuthenticatedRoute path='/profile' component={Profile} />
-      <Route path='/search' exact component={Search} />
-      <Route path='/companies/:id' component={Company} />
-      <Route path='/' exact component={Home} />
-      <Route component={NotFound} />
-    </Switch>
+    <Suspense fallback={<div>Loading...</div>}>
+      <Switch>
+        <AuthenticatedRoute path='/profile' component={Profile} />
+        <Route path='/search' exact component={Search} />
+        <Route path='/companies/:id' component={Company} />
+        <Route path='/' exact component={Home} />
+        <Route component={NotFound} />
+      </Switch>
+    </Suspense>
   );
   const menu = <Menu />
   const footer = <Footer />
