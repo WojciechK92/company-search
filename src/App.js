@@ -28,7 +28,7 @@ function App() {
   const content = ( 
     <Switch>
       <Route path='/profile' component={Profile} />
-      <Route path='/search/:term?' exact component={Search} />
+      <Route path='/search' exact component={Search} />
       <Route path='/companies/:id' component={Company} />
       <Route path='/' component={Home} />
     </Switch>
