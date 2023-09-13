@@ -4,7 +4,7 @@ import MyCompanies from '../Company/MyCompanies/MyCompanies';
 
 function Profile() {
   const {url, path} = useRouteMatch();
-
+  
   return (
     <div className='card'>
       <div className='card-header'>

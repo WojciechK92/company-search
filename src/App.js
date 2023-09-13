@@ -15,6 +15,7 @@ import Home from './pages/Home/Home';
 import Company from './pages/Company/Company';
 import Search from './pages/Search/Search';
 import NotFound from './pages/NotFound/NotFound';
+import ErrorBoundary from './hoc/ErrorBoundary';
 const Profile = lazy(() => import('./pages/Profile/Profile'));
 
 function App() {
@@ -28,15 +29,17 @@ function App() {
     </Header>
   );
   const content = ( 
-    <Suspense fallback={<div>Loading...</div>}>
-      <Switch>
-        <AuthenticatedRoute path='/profile' component={Profile} />
-        <Route path='/search' exact component={Search} />
-        <Route path='/companies/:id' component={Company} />
-        <Route path='/' exact component={Home} />
-        <Route component={NotFound} />
-      </Switch>
-    </Suspense>
+    <ErrorBoundary>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Switch>
+          <AuthenticatedRoute path='/profile' component={Profile} />
+          <Route path='/search' exact component={Search} />
+          <Route path='/companies/:id' component={Company} />
+          <Route path='/' exact component={Home} />
+          <Route component={NotFound} />
+        </Switch>
+      </Suspense>
+    </ErrorBoundary>
   );
   const menu = <Menu />
   const footer = <Footer />
