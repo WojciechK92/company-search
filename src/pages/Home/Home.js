@@ -51,7 +51,7 @@ function Home() {
       //loading from backend
       setCompanies(backendCompanies);
       setLoading(false);
-    }, 1000);
+    }, 300);
   }, []);
 
   return loading 

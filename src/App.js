@@ -14,6 +14,7 @@ import Home from './pages/Home/Home';
 import Profile from './pages/Profile/Profile';
 import Company from './pages/Company/Company';
 import Search from './pages/Search/Search';
+import NotFound from './pages/NotFound/NotFound';
 
 function App() {
 
@@ -30,7 +31,8 @@ function App() {
       <Route path='/profile' component={Profile} />
       <Route path='/search' exact component={Search} />
       <Route path='/companies/:id' component={Company} />
-      <Route path='/' component={Home} />
+      <Route path='/' exact component={Home} />
+      <Route component={NotFound} />
     </Switch>
   );
   const menu = <Menu />

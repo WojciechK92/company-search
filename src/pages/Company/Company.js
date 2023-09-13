@@ -23,7 +23,7 @@ function Company() {
   
       setCompany(backendCompany);
       setLoading(false);
-    }, 1000);  
+    }, 300);  
   }, []);
 
   return loading 
