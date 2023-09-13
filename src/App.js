@@ -1,5 +1,6 @@
 import { useReducer } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import AuthenticatedRoute from './hoc/AuthenticatedRoute';
 import './App.css';
 import Layout from './components/Layout/Layout';
 import Header from './components/Header/Header';
@@ -28,7 +29,7 @@ function App() {
   );
   const content = ( 
     <Switch>
-      <Route path='/profile' component={Profile} />
+      <AuthenticatedRoute path='/profile' component={Profile} />
       <Route path='/search' exact component={Search} />
       <Route path='/companies/:id' component={Company} />
       <Route path='/' exact component={Home} />
