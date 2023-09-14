@@ -9,6 +9,13 @@ const availableRules = {
   password(value) {
     return value.length >= 6 ? '' : 'Password must contain at least 6 characters!'
   },
+  integer(value) {
+    const result = Number.isInteger(Number(value));
+    return result ? '' : 'This field must contain an integer!';
+  },
+  positive(value) {
+    return (value > 0) ? '' : 'This field must contain positive number!';
+  },
 };
 
 export const validate = (value, rules = []) => {

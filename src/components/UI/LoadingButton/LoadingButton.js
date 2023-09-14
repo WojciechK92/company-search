@@ -22,7 +22,7 @@ function LoadingButton(props) {
 
 LoadingButton.propTypes = {
   loading: PropTypes.bool.isRequired,
-  disabled: PropTypes.bool.isRequired,
+  disabled: PropTypes.bool,
 };
 
 export default LoadingButton;

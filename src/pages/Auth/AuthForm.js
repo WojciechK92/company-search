@@ -67,9 +67,6 @@ function AuthForm(props) {
             <div className='invalid-feedback mt-2'>
               {form.email.error} 
             </div>
-            <div className='valid-feedback mt-2'>
-              Your email is valid!
-            </div>
           </div>
           <div className='mb-3'>
             <label className='form-label'>Password</label>
@@ -83,9 +80,6 @@ function AuthForm(props) {
                   : (form.password.value ? 'is-valid' : '')}`} />
             <div className='invalid-feedback mt-2'>
               {form.password.error} 
-            </div>
-            <div className='valid-feedback mt-2'>
-              Your password is valid!
             </div>
           </div>
           <LoadingButton loading={loading} disabled={!checkValid(form)}>{props.buttonText}</LoadingButton>
