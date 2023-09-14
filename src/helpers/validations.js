@@ -29,3 +29,9 @@ export const checkValid = (obj) => {
 
   return valid;
 };
+
+ export const changeHandler = (form, setForm, value, fieldName) => {
+  const error = validate(value, form[fieldName].rules);
+  const valid = error ? false : true;
+  setForm({...form, [fieldName]: {...form[fieldName], value, error, valid}});
+ };

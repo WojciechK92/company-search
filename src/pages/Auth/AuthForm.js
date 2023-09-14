@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import LoadingButton from '../../components/UI/LoadingButton/LoadingButton';
-import { validate, checkValid } from '../../helpers/validations';
+import { checkValid, changeHandler } from '../../helpers/validations';
 
 function AuthForm(props) {
   
@@ -24,11 +24,6 @@ function AuthForm(props) {
     },
   });
 
-  const changeHandler = (value, fieldName) => {
-    const error = validate(value, form[fieldName].rules);
-    const valid = error ? false : true;
-    setForm({...form, [fieldName]: {...form[fieldName], value, error, valid}});
-  };
 
   const submit = (e) => {
     e.preventDefault();
@@ -63,7 +58,7 @@ function AuthForm(props) {
             <label className='form-label'>Email</label>
             <input 
               value={form.email.value}
-              onChange={e => changeHandler(e.target.value, 'email')}
+              onChange={e => changeHandler(form, setForm, e.target.value, 'email')}
               type='email' 
               className={`form-control 
                 ${form.email.error 
@@ -80,7 +75,7 @@ function AuthForm(props) {
             <label className='form-label'>Password</label>
             <input 
               value={form.password.value}
-              onChange={e => changeHandler(e.target.value, 'password')}
+              onChange={e => changeHandler(form, setForm, e.target.value, 'password')}
               type='password' 
               className={`form-control 
                 ${form.password.error 
