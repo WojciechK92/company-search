@@ -1,21 +1,16 @@
-import { useState } from 'react';
 import { useHistory, Redirect } from 'react-router-dom';
 import AuthForm from './AuthForm';
 import useAuth from '../../hooks/useAuth';
 
 function Login() {
 
-  const [loading, setLoading] = useState(false);
   const [auth, setAuth] = useAuth();
   const history = useHistory();
 
-  const submit = () => {
-    setLoading(true);
-
-    setTimeout(() => {
-      setAuth(true);
-      history.push('/');
-    }, 500);
+  const submit = (form) => {
+    // request to backend
+    setAuth(true);
+    history.push('/');
   };
 
 
@@ -23,8 +18,7 @@ function Login() {
     ? <Redirect to='/' />
     : <AuthForm 
         header='Login' 
-        buttonName='Log in'
-        loading={loading} 
+        buttonText='Log in'
         onSubmit={submit} />
 
 };

@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import PropTypes from 'prop-types';
 import ThemeContext from '../../../context/themeContext';
 import styles from './LoadingButton.module.css';
 
@@ -12,7 +13,16 @@ function LoadingButton(props) {
           <span className="visually-hidden">Loading...</span>
         </div>
       </button>
-    : <button className={`mt-2 btn btn-${color} ${styles.button}`}>{props.children}</button>
+    : <button 
+        className={`mt-2 btn btn-${color} ${styles.button}`} 
+        disabled={props.disabled}>
+          {props.children}
+      </button>
+};
+
+LoadingButton.propTypes = {
+  loading: PropTypes.bool.isRequired,
+  disabled: PropTypes.bool.isRequired,
 };
 
 export default LoadingButton;
