@@ -4,6 +4,7 @@ import AuthContext from '../context/authContext';
 function useAuth() {
 
   const setAuth= (user) => {
+    
     if (user) {
       login(user)
       window.localStorage.setItem('user', JSON.stringify(user));
