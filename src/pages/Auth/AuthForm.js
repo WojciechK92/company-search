@@ -1,12 +1,14 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import LoadingButton from '../../components/UI/LoadingButton/LoadingButton';
 import { checkValid, changeHandler } from '../../helpers/validations';
+import useAuth from '../../hooks/useAuth';
 
 function AuthForm(props) {
   
   const [loading, setLoading] = useState(false);
   const [resError, setResError] = useState('');
+  const [auth, setAuth] = useAuth();
   const [form, setForm] = useState({
     email: {
       value: '',
@@ -24,17 +26,26 @@ function AuthForm(props) {
     },
   });
 
+  useEffect(() => {
+    if (auth) {
+      setForm({...form, email: {...form.email, value: auth.email}});
+    };
+  }, [auth]);
 
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
       if (checkValid(form)) {
-        setLoading(true);
-        props.onSubmit(form);
+        await props.onSubmit({
+          email: form.email.value, 
+          password: form.password.value,
+          returnSecureKey: true,
+        });
       };
     } catch(ex) {
-      setResError('Invalid email or password');
+      setResError(ex.response.data.error.message);
 
       setForm({...form, 
         email: {...form.email, showError: false }, 
