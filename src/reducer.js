@@ -4,15 +4,15 @@ export const reducer = (state, action) => {
       const theme = state.theme === 'primary' ? 'warning' : 'primary';
       return { ...state, theme };
     case 'login':
-      return { ...state, isAuthenticated: true };
+      return { ...state, user: action.user};
     case 'logout':
-      return { ...state, isAuthenticated: false };
+      return { ...state, user: null };
     default:
       throw new Error(`This action doesn't exist`);
   }
 };
 
 export const initialState = {
-  isAuthenticated: true,
+  user: JSON.parse(window.localStorage.getItem('user')) ?? null,
   theme: 'warning',
 };
