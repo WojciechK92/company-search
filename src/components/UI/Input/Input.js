@@ -44,7 +44,7 @@ const Input = (props) => {
         <div className='mb-3'>
           <p className='mb-1'>{props.label}</p>
           {props.options.map(option => (
-            <div key={option.name} className='form-check'>
+            <div key={option.name} className='form-check d-inline-block me-5'>
               <input 
                 checked={props.form.value.includes(option.name)}
                 onChange={e => props.onChange(e)}
@@ -62,15 +62,15 @@ const Input = (props) => {
         <div className='mb-3'>
           <p className='mb-1'>{props.label}</p>
           {props.options.map(option => (
-            <div key={option.name} className='form-radio'>
+            <div key={option.name} className='form-check d-inline-block me-5'>
               <input 
                 checked={props.form.value === option.name}
                 onChange={e => props.onChange(e.target.id)}
                 type={props.type}
                 id={option.name}
                 name={props.name}
-                className='form-radio-input' />
-              <label htmlFor={option.name} className='form-radio-label'>{option.label}</label>
+                className='form-check-input' />
+              <label htmlFor={option.name} className='form-check-label'>{option.label}</label>
             </div>
           ))}
         </div>
