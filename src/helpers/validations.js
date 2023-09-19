@@ -32,7 +32,6 @@ export const checkValid = (obj) => {
   let valid = true;
   for (const key in obj) {
     if (!obj[key].valid) valid = false;
-    if (!obj[key].value) valid = false;
   };
 
   return valid;
