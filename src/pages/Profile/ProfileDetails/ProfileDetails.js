@@ -1,9 +1,6 @@
 import AuthForm from '../../Auth/AuthForm';
-import useAuth from '../../../hooks/useAuth';
 
 function ProfileDetails() {
-
-  const [auth, setAuth] = useAuth();
 
   const submit = (form) => {
     // request to backend
