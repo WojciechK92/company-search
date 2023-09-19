@@ -1,16 +1,78 @@
-import { useRouteMatch } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useRouteMatch, Link } from 'react-router-dom';
 import LinkButton from '../../../components/UI/LinkButton/LinkButton';
+import LoadingIcon from '../../../components/UI/LoadingIcon/LoadingIcon'
+import axios from '../../../axios';
+import objectToArrayWithId from '../../../helpers/objectToArrayWithId';
+import useAuth from '../../../hooks/useAuth';
 
 const MyCompanies = () => {
 
   const { url } = useRouteMatch();
+  const [loading, setLoading] = useState(true);
+  const [companies, setCompanies] = useState([]);
+  const [auth] = useAuth();
 
-  return (
-    <div>
-      <p>Your list is empty!</p>
-      <LinkButton to={`${url}/add`}>Create</LinkButton>
-    </div>
-  );
+  const fetchCompanies = async () => {
+    try {
+      const res = await axios.get('/companies.json');
+      const newCompanies = objectToArrayWithId(res.data);
+
+      //filter simulation
+      const filteredCompanies = newCompanies.filter(company => company.user_id === auth.userId) 
+
+      setCompanies(filteredCompanies);
+    } catch(ex) {
+      console.log(ex.response);
+    };
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchCompanies();
+  }, [])
+
+  return loading
+    ? <LoadingIcon />
+    : <>
+        {companies 
+          ? <div className='table-responsive text-center'>
+              <table className='table align-middle'>
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>City</th>
+                    <th><div className='d-none d-md-block'>Industry</div></th>
+                    <th><div className='d-none d-md-block'>Employees</div></th>
+                    <th><div className='d-none d-lg-block'>Benefits</div></th>
+                    <th><div className='d-none d-lg-block'>Recruitment process</div></th>
+                    <th className=''>Option</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {companies.map(company => (
+                    <tr key={company.id}>
+                      <td>{company.name}</td>
+                      <td>{company.city}</td>
+                      <td><div className='d-none d-md-block'>{company.industry}</div></td>
+                      <td><div className='d-none d-md-block'>{company.employees}</div></td>
+                      <td><div className='d-none d-lg-block'>{company.benefits ? 'YES' : 'NO'}</div></td>
+                      <td><div className='d-none d-lg-block'>{company.status}</div></td>
+                      <td>
+                        <div className='btn-group' role="group" aria-label="Editing and deleting">
+                          <Link to={`/profile/companies/${company.id}/edit`} className='btn btn-warning'>Edit</Link>
+                          <button className='btn btn-danger'>Delete</button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table> 
+            </div>
+          : <p>Your list is empty!</p>
+        }
+        <LinkButton to={`${url}/add`}>Create</LinkButton>
+      </>
 };
 
 export default MyCompanies;

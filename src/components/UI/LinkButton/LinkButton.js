@@ -17,7 +17,7 @@ function LinkButton(props) {
     <Link 
       onClick={clickHandler} 
       to={props.to} 
-      className={`px-4 py-2 mt-2 btn btn-${color}`}>
+      className={`px-4 py-2 m-0 btn btn-${color}`}>
         {props.children}
     </Link>
   );
