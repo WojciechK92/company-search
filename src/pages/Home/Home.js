@@ -4,33 +4,8 @@ import SpecilOffer from '../../components/SpecialOffer/SpecialOffer';
 import LastCompany from '../../components/Companies/LastCompany/LastCompany';
 import useStateStorage from '../../hooks/useStateStorage';
 import LoadingIcon from '../../components/UI/LoadingIcon/LoadingIcon';
-
-const backendCompanies = [
-  {
-    id: 1,
-    name: 'Sitaniec Technology',
-    city: 'Zamość',
-    industry: 'Automation',
-    employees: 45,
-    rating: 8.8,
-  }, 
-  {
-    id: 2,
-    name: 'Cewar',
-    city: 'Lublin',
-    industry: 'Trade',
-    employees: 87,
-    rating: 6.2,
-  },
-  {
-    id: 3,
-    name: 'Energoremont',
-    city: 'Krasnystaw',
-    industry: 'Production',
-    employees: 89,
-    rating: 5.9,
-  }, 
-];
+import axios from '../../axios';
+import objectToArrayWithId from '../../helpers/objectToArrayWithId';
 
 function Home() {
 
@@ -46,12 +21,19 @@ function Home() {
     setLastCompany(null);
   };
 
-  useEffect(() => {
-    setTimeout(() => {
-      //loading from backend
-      setCompanies(backendCompanies);
+  const fetchCompanies = async () => {
+    try {
+      const res = await axios.get('/companies.json');
+      const newCompanies = objectToArrayWithId(res.data);
+      setCompanies(newCompanies);
       setLoading(false);
-    }, 300);
+    } catch(ex) {
+      console.log(ex.response);
+    };
+  };
+
+  useEffect(() => {
+    fetchCompanies();
   }, []);
 
   return loading 
