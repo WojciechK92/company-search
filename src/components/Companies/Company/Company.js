@@ -50,9 +50,10 @@ function Company(props) {
 Company.propTypes = {
   name: PropTypes.string.isRequired,
   city: PropTypes.string.isRequired,
-  rating: PropTypes.number.isRequired,
-  employees: PropTypes.number.isRequired,
   industry: PropTypes.string.isRequired,
+  employees: PropTypes.string.isRequired,
+  benefits: PropTypes.array,
+  status: PropTypes.string,
   onOpen: PropTypes.func.isRequired,
 };
 
