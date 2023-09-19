@@ -8,7 +8,7 @@ function AuthForm(props) {
   
   const [loading, setLoading] = useState(false);
   const [resError, setResError] = useState('');
-  const [auth, setAuth] = useAuth();
+  const [auth] = useAuth();
   const [form, setForm] = useState({
     email: {
       value: '',
@@ -28,7 +28,7 @@ function AuthForm(props) {
 
   useEffect(() => {
     if (auth) {
-      setForm({...form, email: {...form.email, value: auth.email}});
+      setForm({...form, email: {...form.email, value: auth.email, valid: true}});
     };
   }, [auth]);
 
@@ -48,8 +48,8 @@ function AuthForm(props) {
       setResError(ex.response.data.error.message);
 
       setForm({...form, 
-        email: {...form.email, showError: false }, 
-        password: {...form.password, value: ''},
+        email: {...form.email, error: '', valid: true }, 
+        password: {...form.password, value: '', valid: false},
       });
 
       setLoading(false);
