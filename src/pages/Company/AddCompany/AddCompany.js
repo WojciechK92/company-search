@@ -3,9 +3,15 @@ import { useHistory } from 'react-router-dom';
 import Input from '../../../components/UI/Input/Input';
 import LoadingButton from '../../../components/UI/LoadingButton/LoadingButton';
 import { changeHandler, checkValid } from '../../../helpers/validations';
+import axios from '../../../axios';
+import useAuth from '../../../hooks/useAuth';
+import SuccessMessage from '../../../components/Other/SuccessMessage/SuccessMessage';
 
 function AddCompany() {
   const [loading, setLoading] = useState(false);
+  const [resError, setResError] = useState('');
+  const [success, setSuccess] = useState(false);
+  const [auth] = useAuth();
   const history = useHistory();
   const [form, setForm] = useState({
     name: {
@@ -62,19 +68,49 @@ function AddCompany() {
     setForm({...form, benefits: {...form.benefits, value: newValue}}) 
   };
 
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
-    setTimeout(() => {
+    try {
+      await axios.post('/companies.json', {
+        name: form.name.value,
+        city: form.city.value,
+        industry: form.industry.value,
+        employees: form.employees.value,
+        benefits: form.benefits.value,
+        status: form.status.value,
+        user_id: auth.userId,
+      });
+
+      setSuccess(true);
+      setTimeout(() => {
+        history.push('/profile/companies');
+      }, 3000);
+      
+    } catch(ex) {
       setLoading(false); 
-    }, 500);
+      setResError(ex.response.data.error.message);
+
+      setForm({...form, 
+        name: {...form.name, error: '', valid: true}, 
+        city: {...form.city, error: '', valid: true},
+        industry: {...form.industry, error: '', valid: true},
+        employees: {...form.employees, error: '', valid: true},
+      });
+    };
   };
+
+  if (success) return <SuccessMessage redirect='My companies' />;
 
   return (
     <div className='card'>
       <div className='card-body'>
         <h2 className='mb-4'>Add company</h2>
+        {resError
+          ? <div className='alert alert-danger py-3'>{resError}</div>
+          : null 
+        }
         <form onSubmit={submit}>
           <Input 
             value={form.name.value}
