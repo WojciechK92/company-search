@@ -19,11 +19,21 @@ import ErrorBoundary from './hoc/ErrorBoundary';
 import Login from './pages/Auth/Login';
 import Register from './pages/Auth/Register';
 import AddCompany from './pages/Company/AddCompany/AddCompany';
+import useStateStorage from './hooks/useStateStorage';
 const Profile = lazy(() => import('./pages/Profile/Profile'));
 
 function App() {
-
+  
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [lastCompany, setLastCompany] = useStateStorage('last-company', null);
+
+  const lastCompanyOpened = (lastCompany) => {
+    setLastCompany(lastCompany); 
+  };
+
+  const removeLastCompany = () => {
+    setLastCompany(null);
+  };
 
   const header = (
     <Header>
@@ -39,9 +49,13 @@ function App() {
           <AuthenticatedRoute path='/profile' component={Profile} />
           <Route path='/register' component={Register} />
           <Route path='/login' component={Login} />
-          <Route path='/search' exact component={Search} />
+          <Route path='/search' exact>
+            <Search onOpen={lastCompanyOpened} />
+          </Route>
           <Route path='/companies/:id' component={Company} />
-          <Route path='/' exact component={Home} />
+          <Route path='/' exact> 
+            <Home onOpen={lastCompanyOpened} onRemove={removeLastCompany} lastCompany={lastCompany} />
+          </Route>
           <Route component={NotFound} />
         </Switch>
       </Suspense>

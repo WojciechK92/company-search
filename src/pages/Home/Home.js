@@ -1,25 +1,15 @@
 import { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import Companies from '../../components/Companies/Companies';
 import SpecilOffer from '../../components/SpecialOffer/SpecialOffer';
-import LastCompany from '../../components/Companies/LastCompany/LastCompany';
-import useStateStorage from '../../hooks/useStateStorage';
 import LoadingIcon from '../../components/UI/LoadingIcon/LoadingIcon';
+import LastCompany from '../../components/Companies/LastCompany/LastCompany';
 import axios from '../../axios';
 import objectToArrayWithId from '../../helpers/objectToArrayWithId';
 
-function Home() {
-
-  const [lastCompany, setLastCompany] = useStateStorage('last-company', null);
+function Home(props) {
   const [companies, setCompanies] = useState([]);  
   const [loading, setLoading] = useState(true);
-
-  const lastCompanyOpened = (lastCompany) => {
-    setLastCompany(lastCompany); 
-  };
-
-  const removeLastCompany = () => {
-    setLastCompany(null);
-  };
 
   const fetchCompanies = async () => {
     try {
@@ -40,13 +30,19 @@ function Home() {
     ? <LoadingIcon /> 
     : <>
         <SpecilOffer />
-        {lastCompany 
-          ? <LastCompany lastCompany={lastCompany} onRemove={removeLastCompany} /> 
+        {props.lastCompany 
+          ? <LastCompany lastCompany={props.lastCompany} onRemove={props.onRemove} /> 
           : null}
         <Companies 
           companies={companies} 
-          onOpen={lastCompanyOpened} />
+          onOpen={props.onOpen} />
       </>
+};
+
+Home.propTypes = {
+  lastCompany: PropTypes.object,
+  onRemove: PropTypes.func.isRequired,
+  onOpen: PropTypes.func.isRequired,
 };
 
 export default Home;
