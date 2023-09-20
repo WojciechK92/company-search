@@ -19,6 +19,7 @@ import ErrorBoundary from './hoc/ErrorBoundary';
 import Login from './pages/Auth/Login';
 import Register from './pages/Auth/Register';
 import AddCompany from './pages/Company/AddCompany/AddCompany';
+import EditCompany from './pages/Company/EditCompany/EditCompany';
 import useStateStorage from './hooks/useStateStorage';
 const Profile = lazy(() => import('./pages/Profile/Profile'));
 
@@ -46,6 +47,7 @@ function App() {
       <Suspense fallback={<div>Loading...</div>}>
         <Switch>
           <AuthenticatedRoute path='/profile/companies/add' component={AddCompany} />
+          <AuthenticatedRoute path='/profile/companies/edit/:id' component={EditCompany} />
           <AuthenticatedRoute path='/profile' component={Profile} />
           <Route path='/register' component={Register} />
           <Route path='/login' component={Login} />
