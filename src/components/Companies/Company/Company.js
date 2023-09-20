@@ -25,7 +25,7 @@ function Company(props) {
               </div>
               <div className='col-4 col-md-3 text-end'>
                 <h4>
-                  <span className='badge bg-dark text-light h2'>{props.rating}</span>
+                  <span className='badge bg-dark text-light h2'>{props.rating ?? '0.0'}</span>
                 </h4>
               </div>
               <div className='d-none d-md-block col-md-7 text-start'>

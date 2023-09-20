@@ -16,7 +16,7 @@ function EditCompany() {
   };
 
   const submit = async (data) => {
-    await axios.put(`/companies/${id}.json`, data);
+    await axios.patch(`/companies/${id}.json`, data);
     
     setSuccess(true);
     setTimeout(() => {

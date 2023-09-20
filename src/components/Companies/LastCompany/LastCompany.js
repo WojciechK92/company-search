@@ -24,7 +24,7 @@ function LastCompany(props) {
               </div>
               <div className={styles.lastCompany}>
                 <p className='card-text'>Do you want to see it again?</p>
-                <Link to={`/companies/:${props.lastCompany.id}`} className='me-4 btn btn-dark text-light'>YES</Link>
+                <Link to={`/companies/${props.lastCompany.id}`} className='me-4 btn btn-dark text-light'>YES</Link>
                 <button 
                   onClick={removeLastCompany}
                   className='btn btn-dark text-light'>
