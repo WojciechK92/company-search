@@ -27,7 +27,7 @@ function Register() {
     });
   };
 
-  if (success) return <SuccessMessage redirect='Home page'/>
+  if (success) return <SuccessMessage to='/' redirect='Home page'/>
 
   return auth 
     ? <Redirect to='/' /> 

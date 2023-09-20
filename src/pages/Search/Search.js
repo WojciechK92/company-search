@@ -32,15 +32,13 @@ function Search(props) {
   }, [term]);
 
   return (
-    <div className='card'>
-      <div className='card-body'>
-        <h5>Results for searched phrase: '{term}'</h5>
+      <div>
+        <h4 className='my-4'>Results for searched phrase: "{term}"</h4>
         {loading 
           ? <LoadingIcon />
           : <Companies companies={companies} onOpen={props.onOpen} />
         }
       </div>
-    </div>
 
   );
 };
