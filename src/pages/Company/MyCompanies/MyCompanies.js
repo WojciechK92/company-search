@@ -32,6 +32,17 @@ const MyCompanies = () => {
     fetchCompanies();
   }, [])
 
+  const removeCompany = async (companyId) => {
+    if (window.confirm('Are you sure you want delete this company?')) {
+      try {
+        await axios.delete(`/companies/${companyId}.json`); 
+        fetchCompanies();
+      } catch(ex) {
+        console.log(ex);
+      };
+    };
+  };
+
   return loading
     ? <LoadingIcon />
     : <>
@@ -52,16 +63,16 @@ const MyCompanies = () => {
                 <tbody>
                   {companies.map(company => (
                     <tr key={company.id}>
-                      <td>{company.name}</td>
+                      <td className='text-start'>{company.name}</td>
                       <td>{company.city}</td>
                       <td><div className='d-none d-md-block'>{company.industry}</div></td>
                       <td><div className='d-none d-md-block'>{company.employees}</div></td>
                       <td><div className='d-none d-lg-block'>{company.benefits ? 'YES' : 'NO'}</div></td>
-                      <td><div className='d-none d-lg-block'>{company.status}</div></td>
+                    <td><div className={`d-none d-lg-inline badge ${company.status === 'active' ? 'bg-success' : 'bg-danger'}`}>{company.status}</div></td>
                       <td>
                         <div className='btn-group' role="group" aria-label="Editing and deleting">
-                          <Link to={`/profile/companies/${company.id}/edit`} className='btn btn-warning'>Edit</Link>
-                          <button className='btn btn-danger'>Delete</button>
+                          <Link to={`/profile/companies/edit/${company.id}`} className='btn btn-warning'>Edit</Link>
+                          <button onClick={() => removeCompany(company.id)} className='btn btn-danger'>Delete</button>
                         </div>
                       </td>
                     </tr>
@@ -71,7 +82,7 @@ const MyCompanies = () => {
             </div>
           : <p>Your list is empty!</p>
         }
-        <LinkButton to={`${url}/add`}>Create</LinkButton>
+        <LinkButton to={`${url}/add`}>Add</LinkButton>
       </>
 };
 
