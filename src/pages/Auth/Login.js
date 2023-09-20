@@ -4,11 +4,13 @@ import AuthForm from './AuthForm';
 import useAuth from '../../hooks/useAuth';
 import axios from '../../axiosAuth';
 import SuccessMessage from '../../components/Other/SuccessMessage/SuccessMessage';
+import useWebTitle from '../../hooks/useWebsiteTitle';
 
 function Login() {
 
   const [auth, setAuth] = useAuth();
   const [success, setSuccess] = useState(false);
+  useWebTitle('Company Search - Login');
 
   const submit = async (data) => {
 

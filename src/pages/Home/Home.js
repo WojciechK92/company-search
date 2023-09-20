@@ -6,11 +6,14 @@ import LoadingIcon from '../../components/UI/LoadingIcon/LoadingIcon';
 import LastCompany from '../../components/Companies/LastCompany/LastCompany';
 import axios from '../../axios';
 import objectToArrayWithId from '../../helpers/objectToArrayWithId';
+import useWebTitle from '../../hooks/useWebsiteTitle';
 
 function Home(props) {
   const [companies, setCompanies] = useState([]);  
   const [loading, setLoading] = useState(true);
   const [specialOffer, setSpecialOffer] = useState(false);
+  useWebTitle('Company Search - Home');
+
 
   const fetchCompanies = async () => {
     try {

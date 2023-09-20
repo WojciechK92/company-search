@@ -5,12 +5,14 @@ import axios from '../../axios';
 import useAuth from '../../hooks/useAuth';
 import LinkButton from '../../components/UI/LinkButton/LinkButton';
 import ReactStars from "react-rating-stars-component";
+import useWebTitle from '../../hooks/useWebsiteTitle';
 
 function Company() {
   const [company, setCompany] = useState(null);
   const [loading, setLoading] = useState(true);
   const [auth] = useAuth();
   const [rating, setRating] = useState(0);
+  useWebTitle('Company Search - Company');
 
   const { id } = useParams();
 

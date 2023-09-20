@@ -1,9 +1,11 @@
 import { NavLink, useRouteMatch, Route, Switch } from 'react-router-dom';
 import ProfileDetails from './ProfileDetails/ProfileDetails';
 import MyCompanies from '../Company/MyCompanies/MyCompanies';
+import useWebTitle from '../../hooks/useWebsiteTitle';
 
 function Profile() {
   const {url, path} = useRouteMatch();
+  useWebTitle('Company Search - Profile');
   
   return (
     <div className='card'>

@@ -4,11 +4,13 @@ import useAuth from '../../hooks/useAuth';
 import AuthForm from './AuthForm';
 import axios from '../../axiosAuth';
 import SuccessMessage from '../../components/Other/SuccessMessage/SuccessMessage';
+import useWebTitle from '../../hooks/useWebsiteTitle';
 
 function Register() {
   
   const [auth, setAuth] = useAuth();
   const [success, setSuccess] = useState(false);
+  useWebTitle('Company Search - Register');
   
   const submit = async (data) => {
     const res = await axios.post('accounts:signUp', data); 
