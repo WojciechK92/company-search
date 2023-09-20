@@ -8,6 +8,7 @@ function useAuth() {
     if (user) {
       login(user)
       window.localStorage.setItem('user', JSON.stringify(user));
+      window.localStorage.setItem('registered', true); 
     } else {
       logout();
       window.localStorage.setItem('user', null);

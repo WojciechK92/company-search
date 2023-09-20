@@ -1,29 +1,23 @@
-import { useState } from 'react';
+import PropTypes from 'prop-types';
 import Timer from '../Other/Timer/Timer';
 import LinkButton from '../UI/LinkButton/LinkButton';
 
-function SpecilOffer() {
-  const [timer, setTimer] = useState(true);
+function SpecialOffer(props) {
 
-  const resetTimer = () => {
-    setTimer(false);
-  };
-
-  if (timer) {
-    return (
-      <div className='card mb-3 text-center'>
-        <div className='card-header h4 bg-warning'>Special offer for you!</div>
-        <div className='card-body'>
-          <p>You stil have time to register with a 25% discount:</p>
-          <Timer hours={0} minutes={0} seconds={15} reset={resetTimer} />
-          <LinkButton to='/register'>Register</LinkButton>
-        </div>
+  return (
+    <div className='card mb-3 text-center'>
+      <div className='card-header h4 bg-warning'>Special offer for you!</div>
+      <div className='card-body'>
+        <p>You stil have time to register with a 25% discount:</p>
+        <Timer reset={props.onHide} />
+        <LinkButton to='/register'>Register</LinkButton>
       </div>
-    );
-  } else {
-    return null;
-  };
-
+    </div>
+  );
 };
 
-export default SpecilOffer;
+SpecialOffer.propTypes = {
+  onHide: PropTypes.func.isRequired,
+};
+
+export default SpecialOffer;
