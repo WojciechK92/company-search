@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Companies from '../../components/Companies/Companies';
-import SpecilOffer from '../../components/SpecialOffer/SpecialOffer';
+import SpecialOffer from '../../components/SpecialOffer/SpecialOffer';
 import LoadingIcon from '../../components/UI/LoadingIcon/LoadingIcon';
 import LastCompany from '../../components/Companies/LastCompany/LastCompany';
 import axios from '../../axios';
@@ -10,6 +10,7 @@ import objectToArrayWithId from '../../helpers/objectToArrayWithId';
 function Home(props) {
   const [companies, setCompanies] = useState([]);  
   const [loading, setLoading] = useState(true);
+  const [specialOffer, setSpecialOffer] = useState(false);
 
   const fetchCompanies = async () => {
     try {
@@ -26,10 +27,35 @@ function Home(props) {
     fetchCompanies();
   }, []);
 
+  // Special offer
+  const hideSpecialOffer = () => {
+    setSpecialOffer(false);
+  };
+
+  useEffect(() => {
+    let endTime = JSON.parse(window.localStorage.getItem('timer'));
+    const now = new Date();
+
+    if (endTime) {
+      endTime = new Date(endTime);
+      endTime > now ? setSpecialOffer(true) : setSpecialOffer(false);
+    } else {
+      endTime = now;
+      endTime.setHours(endTime.getHours());
+      endTime.setMinutes(endTime.getMinutes() + 2);
+      endTime.setSeconds(endTime.getSeconds() + 45);
+      window.localStorage.setItem('timer', JSON.stringify(endTime));
+      setSpecialOffer(true);
+    };
+  });
+
+
   return loading 
     ? <LoadingIcon /> 
     : <>
-        <SpecilOffer />
+        {specialOffer && !window.localStorage.getItem('registered')
+         ? <SpecialOffer onHide={hideSpecialOffer}/>
+         : null}
         {props.lastCompany 
           ? <LastCompany lastCompany={props.lastCompany} onRemove={props.onRemove} /> 
           : null}
