@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import axios from '../../../axios';
 import SuccessMessage from '../../../components/Other/SuccessMessage/SuccessMessage';
 import CompanyForm from '../CompanyForm';
@@ -8,19 +7,15 @@ import useWebTitle from '../../../hooks/useWebsiteTitle';
 function AddCompany() {
  
   const [success, setSuccess] = useState(false);
-  const history = useHistory();
   useWebTitle('Company Search - Add company');
 
   const submit = async (data) => {
     await axios.post('/companies.json', data);
     setSuccess(true);
-    setTimeout(() => {
-      history.push('/profile/companies');
-    }, 3000);
   };
 
   return success
-    ? <SuccessMessage redirect='My companies' />
+    ? <SuccessMessage to='/profile/companies' redirect='My companies' />
     : <CompanyForm 
       label='Add company' 
       buttonText='Add'

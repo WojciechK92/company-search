@@ -45,45 +45,47 @@ const MyCompanies = () => {
 
   return loading
     ? <LoadingIcon />
-    : <>
-        {companies 
-          ? <div className='table-responsive text-center'>
-              <table className='table align-middle'>
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>City</th>
-                    <th><div className='d-none d-md-block'>Industry</div></th>
-                    <th><div className='d-none d-md-block'>Employees</div></th>
-                    <th><div className='d-none d-lg-block'>Benefits</div></th>
-                    <th><div className='d-none d-lg-block'>Recruitment process</div></th>
-                    <th className=''>Option</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {companies.map(company => (
-                    <tr key={company.id}>
-                      <td className='text-start'>{company.name}</td>
-                      <td>{company.city}</td>
-                      <td><div className='d-none d-md-block'>{company.industry}</div></td>
-                      <td><div className='d-none d-md-block'>{company.employees}</div></td>
-                      <td><div className='d-none d-lg-block'>{company.benefits ? 'YES' : 'NO'}</div></td>
-                    <td><div className={`d-none d-lg-inline badge ${company.status === 'active' ? 'bg-success' : 'bg-danger'}`}>{company.status}</div></td>
-                      <td>
-                        <div className='btn-group' role="group" aria-label="Editing and deleting">
-                          <Link to={`/profile/companies/edit/${company.id}`} className='btn btn-warning'>Edit</Link>
-                          <button onClick={() => removeCompany(company.id)} className='btn btn-danger'>Delete</button>
-                        </div>
-                      </td>
+    : <div className='card'>
+        <div className='card-body'>
+          {companies.length 
+            ? <div className='table-responsive text-center'>
+                <table className='table align-middle'>
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>City</th>
+                      <th><div className='d-none d-md-block'>Industry</div></th>
+                      <th><div className='d-none d-md-block'>Employees</div></th>
+                      <th><div className='d-none d-lg-block'>Benefits</div></th>
+                      <th><div className='d-none d-lg-block'>Recruitment process</div></th>
+                      <th className=''>Option</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table> 
-            </div>
-          : <p>Your list is empty!</p>
-        }
-        <LinkButton to={`${url}/add`}>Add</LinkButton>
-      </>
+                  </thead>
+                  <tbody>
+                    {companies.map(company => (
+                      <tr key={company.id}>
+                        <td className='text-start'>{company.name}</td>
+                        <td>{company.city}</td>
+                        <td><div className='d-none d-md-block'>{company.industry}</div></td>
+                        <td><div className='d-none d-md-block'>{company.employees}</div></td>
+                        <td><div className='d-none d-lg-block'>{company.benefits ? 'YES' : 'NO'}</div></td>
+                      <td><div className={`d-none d-lg-inline badge ${company.status === 'active' ? 'bg-success' : 'bg-danger'}`}>{company.status}</div></td>
+                        <td>
+                          <div className='btn-group' role="group" aria-label="Editing and deleting">
+                            <Link to={`/profile/companies/edit/${company.id}`} className='btn btn-warning'>Edit</Link>
+                            <button onClick={() => removeCompany(company.id)} className='btn btn-danger'>Delete</button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table> 
+              </div>
+            : <p>Your list is empty!</p>
+          }
+          <LinkButton to={`${url}/add`}>Add</LinkButton>
+        </div>
+      </div>
 };
 
 export default MyCompanies;

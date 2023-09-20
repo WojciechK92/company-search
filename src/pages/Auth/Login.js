@@ -17,9 +17,6 @@ function Login() {
     const res = await axios.post('accounts:signInWithPassword', data);
 
     setSuccess(true);
-    setTimeout(() => {
-      setSuccess(false);
-    }, 3000);
 
     setAuth({
       userId: res.data.localId,
@@ -28,7 +25,7 @@ function Login() {
     });
   };
 
-  if (success) return <SuccessMessage redirect='Home page' />
+  if (success) return <SuccessMessage to='/' redirect='Home page' />
 
   return auth 
     ? <Redirect to='/' />
