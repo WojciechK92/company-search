@@ -15,7 +15,7 @@ function Profile() {
       <div className='card-body p-4'>
         <ul className="nav nav-tabs">
           <li className="nav-item">
-            <NavLink className="nav-link" to={url} exact>Profile</NavLink>
+            <NavLink className="nav-link" to={url} exact>Edit my profile</NavLink>
           </li>
           <li className="nav-item">
             <NavLink className="nav-link" to={`${url}/companies`}>My companies</NavLink>
