@@ -41,7 +41,7 @@ function AuthForm(props) {
         await props.onSubmit({
           email: form.email.value, 
           password: form.password.value,
-          returnSecureKey: true,
+          returnSecureToken: true,
         });
       };
     } catch(ex) {
