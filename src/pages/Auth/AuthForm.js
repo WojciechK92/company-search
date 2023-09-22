@@ -45,7 +45,7 @@ function AuthForm(props) {
         });
       };
     } catch(ex) {
-      setResError(ex.response.data.error.message);
+      setResError(Object.values(ex)[0]);
 
       setForm({...form, 
         email: {...form.email, error: '', valid: true }, 

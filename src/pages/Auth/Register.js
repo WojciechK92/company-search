@@ -2,32 +2,26 @@ import { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 import AuthForm from './AuthForm';
-import axios from '../../axiosAuth';
 import SuccessMessage from '../../components/Other/SuccessMessage/SuccessMessage';
 import useWebTitle from '../../hooks/useWebsiteTitle';
+import app from '../../firebase';
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 function Register() {
   
-  const [auth, setAuth] = useAuth();
+  const [auth] = useAuth();
   const [success, setSuccess] = useState(false);
   useWebTitle('Company Search - Register');
   
   const submit = async (data) => {
-    const res = await axios.post('accounts:signUp', data); 
+    // register 
+    const authFirebase = getAuth(app);
+    await createUserWithEmailAndPassword(authFirebase, data.email, data.password)
 
     setSuccess(true);
-    setTimeout(() => {
-      setSuccess(false);
-    }, 3000);
-
-    setAuth({
-      userId: res.data.localId,
-      email: res.data.email,
-      token: res.data.idToken,
-    });
   };
 
-  if (success) return <SuccessMessage to='/' redirect='Home page'/>
+  if (success) return <SuccessMessage to='/login' redirect='Login page' />
 
   return auth 
     ? <Redirect to='/' /> 

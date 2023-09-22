@@ -2,13 +2,19 @@ import { useEffect, useState } from 'react';
 import LoadingButton from '../../../components/UI/LoadingButton/LoadingButton';
 import { checkValid, changeHandler } from '../../../helpers/validations';
 import useAuth from '../../../hooks/useAuth';
-import axios from 'axios';
+import SuccessMessage from '../../../components/Other/SuccessMessage/SuccessMessage';
+import app from '../../../firebase';
+import { getAuth, reauthenticateWithCredential, EmailAuthProvider, verifyBeforeUpdateEmail, updatePassword } from "firebase/auth";
+import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
+
+const authFirebase = getAuth(app);
 
 function ProfileDetails() {
   
   const [loading, setLoading] = useState(false);
   const [resError, setResError] = useState('');
-  const [auth] = useAuth();
+  const [success, setSuccess] = useState(false);
+  const [auth, setAuth] = useAuth();
   const [form, setForm] = useState({
     email: {
       value: '',
@@ -32,34 +38,46 @@ function ProfileDetails() {
     };
   }, [auth]);
 
+  function promptForCredentials() {
+    const password = window.prompt('Enter your password'); // Ta funkcja powinna wyświetlić okno dialogowe proszące użytkownika o hasło
+
+    const credential = EmailAuthProvider.credential(
+      authFirebase.currentUser.email,
+      password
+    );
+  
+    return credential;
+  };
+
   const submit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
+    const user = authFirebase.currentUser;
+    const credential = promptForCredentials();
+    
     try {
-      if (checkValid(form)) {
-        await axios.post('https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyCO-FghVgGzBAZ57SnSbmYrCG6YLiwvXgk', {
-          idToken: auth.token,
-          email: form.email.value, 
-          // password: form.password.value,
-          returnSecureToken: true,
-        });
-      };
+      // user reauthentication
+      await reauthenticateWithCredential(user, credential)
+      // verification and update email
+      await verifyBeforeUpdateEmail(authFirebase.currentUser, form.email.value)
+      // update password
+      await updatePassword(authFirebase.currentUser, form.password.value)
+
+      setSuccess(true);
+      setAuth(null);
     } catch(ex) {
-      console.log(ex);
-      setResError(ex.response.data.error.message);
-
-      setForm({...form, 
-        email: {...form.email, error: '', valid: true }, 
-        password: {...form.password, value: '', valid: false},
-      });
-
+      setResError(Object.values(ex)[0]);
       setLoading(false);
+      setForm({...form, password: {...form.password, value: '', valid: false}})
     };
+
   };
 
-  return (
-    <div>
+  if (success) return <SuccessMessage to='/login' redirect='Profile' sendEmail={true}/>;
+
+  return auth 
+    ? <div>
         {resError
           ? <div className='alert alert-danger py-3'>{resError}</div>
           : null 
@@ -95,8 +113,8 @@ function ProfileDetails() {
           </div>
           <LoadingButton loading={loading} disabled={!checkValid(form)}>Save</LoadingButton>
         </form>
-    </div>
-  );
+      </div>
+    : <Redirect to='/' /> 
 };
 
 export default ProfileDetails;
