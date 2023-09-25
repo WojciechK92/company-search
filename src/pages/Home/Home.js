@@ -14,11 +14,23 @@ function Home(props) {
   const [specialOffer, setSpecialOffer] = useState(false);
   useWebTitle('Company Search - Home');
 
-
   const fetchCompanies = async () => {
     try {
       const res = await axios.get('/companies.json');
       const newCompanies = objectToArrayWithId(res.data);
+
+      newCompanies.sort((a, b) => {
+        let nameA = a.name.toUpperCase(); 
+        let nameB = b.name.toUpperCase();
+        if (nameA < nameB) {
+          return -1;
+        }
+        if (nameA > nameB) {
+          return 1;
+        }
+        return 0;
+      });
+      
       setCompanies(newCompanies);
       setLoading(false);
     } catch(ex) {

@@ -6,6 +6,7 @@ import useAuth from '../../hooks/useAuth';
 import LinkButton from '../../components/UI/LinkButton/LinkButton';
 import ReactStars from "react-rating-stars-component";
 import useWebTitle from '../../hooks/useWebsiteTitle';
+import { formatValues } from '../../helpers/formatValues';
 
 function Company() {
   const [company, setCompany] = useState(null);
@@ -20,11 +21,8 @@ function Company() {
     try {
       const res = await axios.get(`/companies/${id}.json`);
      
-      let content = {...res.data};
-      if (!content.benefits) content.benefits = [null]; 
-
-      setCompany(content);
-      setRating(content.rating ?? 0)
+      setCompany(res.data);
+      setRating(res.data.rating || 0)
       setLoading(false);
     } catch(ex) {
       console.log(ex);
@@ -39,44 +37,11 @@ function Company() {
     setRating(newRating);
     
     try {
-      await axios.patch(`/companies/${id}.json`, {
+      await axios.patch(`/companies/${id}.json?auth=${auth.stsTokenManager.accessToken}`, {
         rating: newRating,
       });
     } catch(ex) {
       console.log(ex);
-    };
-  };
-
-  const formatValues = (value) => {
-    if (Array.isArray(value)) {
-      let array = [];
-
-      for(let i = 0; i < company.benefits.length; i++) {
-        switch (company.benefits[i]) {
-          case 'multisportCard':
-            array.push('Multisport card');
-            break;
-          case 'playroom':
-            array.push('Playroom');
-            break;
-          case 'medicalPackage':
-            array.push('Medical package');
-            break;
-          case 'fruitThursdays':
-            array.push('Fruit Thursdays');
-            break;
-          default:
-            array.push('-------')
-        };
-      };    
-
-      return array.join(', ')
-
-    } else {
-      const capitalLetter = value.slice(0,1).toUpperCase();
-      const restText = value.slice(1);
-
-      return capitalLetter + restText;
     };
   };
 
@@ -106,8 +71,12 @@ function Company() {
                       <td className='text-end'>{formatValues(company.industry)}</td>
                     </tr>
                     <tr>
+                      <th className='text-start'>Employees</th>
+                      <td className='text-end'>{company.employees}</td>
+                    </tr>                    
+                    <tr>
                       <th className='text-start'>Benefits</th>
-                      <td className='text-end'>{formatValues(company.benefits)}</td>
+                      <td className='text-end'>{formatValues(company.benefits || [])}</td>
                     </tr>
                     <tr>
                       <th className='text-start'>Recruitment process</th>

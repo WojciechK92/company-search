@@ -21,6 +21,18 @@ const MyCompanies = () => {
       //filter simulation
       const filteredCompanies = newCompanies.filter(company => company.user_id === auth.userId) 
 
+      filteredCompanies.sort((a, b) => {
+        let nameA = a.name.toUpperCase(); 
+        let nameB = b.name.toUpperCase();
+        if (nameA < nameB) {
+          return -1;
+        };
+        if (nameA > nameB) {
+          return 1;
+        };
+        return 0;
+      });
+
       setCompanies(filteredCompanies);
     } catch(ex) {
       console.log(ex.response);
