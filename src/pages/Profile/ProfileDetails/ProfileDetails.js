@@ -5,6 +5,7 @@ import app from '../../../firebase';
 import { getAuth, reauthenticateWithCredential, EmailAuthProvider, verifyBeforeUpdateEmail, updatePassword } from "firebase/auth";
 import ModalButton from '../../../components/UI/ModalButton/ModalButton';
 import ModalInfo from '../../../components/UI/ModalInfo/ModalInfo';
+import { convertErrorMessage } from '../../../helpers/errorMessages';
 
 function ProfileDetails() {
   const authFirebase = getAuth(app);
@@ -63,7 +64,8 @@ function ProfileDetails() {
       // setSendEmail(auth.email !== form.email.value);
       setSuccess(true);
     } catch(ex) {
-      setResError(Object.values(ex)[0]);
+      const convertedMessage = convertErrorMessage(Object.values(ex)[0]);
+      setResError(convertedMessage);
       resetFormAfterSubmit();
     };
     

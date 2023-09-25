@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import LoadingButton from '../../components/UI/LoadingButton/LoadingButton';
 import { checkValid, changeHandler } from '../../helpers/validations';
 import useAuth from '../../hooks/useAuth';
+import { convertErrorMessage } from '../../helpers/errorMessages';
 
 function AuthForm(props) {
   
@@ -45,7 +46,8 @@ function AuthForm(props) {
         });
       };
     } catch(ex) {
-      setResError(Object.values(ex)[0]);
+      const convertedMessage = convertErrorMessage(Object.values(ex)[0]);
+      setResError(convertedMessage);
 
       setForm({...form, 
         email: {...form.email, error: '', valid: true }, 
