@@ -35,7 +35,7 @@ const MyCompanies = () => {
   const removeCompany = async (companyId) => {
     if (window.confirm('Are you sure you want delete this company?')) {
       try {
-        await axios.delete(`/companies/${companyId}.json`); 
+        await axios.delete(`/companies/${companyId}.json?auth=${auth.stsTokenManager.accessToken}`); 
         fetchCompanies();
       } catch(ex) {
         console.log(ex);

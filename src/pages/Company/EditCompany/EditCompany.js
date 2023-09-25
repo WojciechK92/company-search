@@ -1,14 +1,17 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from '../../../axios';
-import ModalInfo from '../../../components/UI/ModalInfo/ModalInfo';
+import ModalInfo from '../../../components/UI/ModalInfo/ModalInfo'
 import CompanyForm from '../CompanyForm';
 import useWebTitle from '../../../hooks/useWebsiteTitle';
+import useAuth from '../../../hooks/useAuth';
 
 function EditCompany() {
   const [success, setSuccess] = useState(false);
   const [company, setCompany] = useState(null);
+  
   const { id } = useParams();
+  const [auth] = useAuth();
   useWebTitle('Company Search - Edit company');
 
   const fetchCompany = async () => {
@@ -17,7 +20,7 @@ function EditCompany() {
   };
 
   const submit = async (data) => {
-    await axios.patch(`/companies/${id}.json`, data);
+    await axios.patch(`/companies/${id}.json?auth=${auth.stsTokenManager.accessToken}`, data);
     setSuccess(true);
   };
   

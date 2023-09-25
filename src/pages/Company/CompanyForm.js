@@ -85,7 +85,7 @@ function CompanyForm(props) {
       };
     } catch(ex) {
       setLoading(false); 
-      setResError(ex.response.data.error.message);
+      setResError(ex.response.data.error);
 
       setForm({...form, 
         name: {...form.name, error: '', valid: true}, 
