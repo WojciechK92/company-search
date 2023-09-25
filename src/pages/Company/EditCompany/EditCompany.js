@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from '../../../axios';
-import SuccessMessage from '../../../components/Other/SuccessMessage/SuccessMessage';
+import ModalInfo from '../../../components/UI/ModalInfo/ModalInfo';
 import CompanyForm from '../CompanyForm';
 import useWebTitle from '../../../hooks/useWebsiteTitle';
 
@@ -26,7 +26,9 @@ function EditCompany() {
   }, [id]);
   
   return success
-    ? <SuccessMessage to='/profile/companies' redirect='My companies' />
+    ? <ModalInfo to='/profile/companies' label='Successful!' time={3000} >
+        <p>You will be redirected to the my companies page!</p>
+      </ModalInfo>
     : <CompanyForm 
       company={company} 
       label='Edit company' 

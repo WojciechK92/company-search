@@ -2,10 +2,10 @@ import { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import AuthForm from './AuthForm';
 import useAuth from '../../hooks/useAuth';
-import SuccessMessage from '../../components/Other/SuccessMessage/SuccessMessage';
 import useWebTitle from '../../hooks/useWebsiteTitle';
 import app from '../../firebase';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import ModalInfo from '../../components/UI/ModalInfo/ModalInfo';
 
 function Login() {
   
@@ -22,7 +22,11 @@ function Login() {
     setAuth(userCredential.user);
   };
 
-  if (success) return <SuccessMessage to='/' redirect='Home page' />
+    if (success) return (
+      <ModalInfo label='Successful login!' to='/' time={3000}>
+        <p>You will be redirected to the home page!</p>
+      </ModalInfo>
+    );
 
   return auth 
     ? <Redirect to='/' />

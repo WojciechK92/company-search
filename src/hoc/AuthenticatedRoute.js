@@ -7,7 +7,7 @@ function AuthenticatedRoute(props) {
 
   return auth 
     ? <Route path={props.path} component={props.component} /> 
-    : <Redirect to='/' />
+    : <Redirect to='/login' />
 };
 
 AuthenticatedRoute.propTypes = {

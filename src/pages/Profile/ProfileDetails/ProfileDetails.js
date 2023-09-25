@@ -1,21 +1,18 @@
 import { useEffect, useState } from 'react';
-import { Redirect } from 'react-router-dom';
-import ModalButton from '../../../components/UI/ModalButton/ModalButton';
 import { checkValid, changeHandler } from '../../../helpers/validations';
 import useAuth from '../../../hooks/useAuth';
-import SuccessMessage from '../../../components/Other/SuccessMessage/SuccessMessage';
 import app from '../../../firebase';
 import { getAuth, reauthenticateWithCredential, EmailAuthProvider, verifyBeforeUpdateEmail, updatePassword } from "firebase/auth";
-
-const authFirebase = getAuth(app);
+import ModalButton from '../../../components/UI/ModalButton/ModalButton';
+import ModalInfo from '../../../components/UI/ModalInfo/ModalInfo';
 
 function ProfileDetails() {
+  const authFirebase = getAuth(app);
   
   const [loading, setLoading] = useState(false);
   const [resError, setResError] = useState('');
   const [success, setSuccess] = useState(false);
-  const [sendEmail, setSendEmail] = useState(false);
-  const [auth, setAuth] = useAuth();
+  const [auth] = useAuth();
   const [form, setForm] = useState({
     email: {
       value: '',
@@ -32,12 +29,12 @@ function ProfileDetails() {
       valid: false,
     },
   });
-
+  
   useEffect(() => {
     if (auth) {
       setForm({...form, email: {...form.email, value: auth.email, valid: true}});
     };
-  }, [auth]);
+  }, []);
 
   function promptForCredentials(password) {
 
@@ -50,7 +47,6 @@ function ProfileDetails() {
   };
 
   const submit = async (reauthPassword) => {
-    // e.preventDefault();
     setLoading(true);
 
     const user = authFirebase.currentUser;
@@ -64,62 +60,74 @@ function ProfileDetails() {
       // update password
       await updatePassword(authFirebase.currentUser, form.password.value)
 
-      setSendEmail(auth.email !== form.email.value);
+      // setSendEmail(auth.email !== form.email.value);
       setSuccess(true);
-      setAuth(null);
     } catch(ex) {
       setResError(Object.values(ex)[0]);
-      setLoading(false);
-      setForm({...form, password: {...form.password, value: '', valid: false}})
+      resetFormAfterSubmit();
     };
-
+    
+  };
+  
+  const resetFormAfterSubmit = () => {
+    setForm({...form, password: {...form.password, value: '', valid: false}})
+    setLoading(false);
   };
 
-  if (success) return <SuccessMessage 
-                          to='/login' 
-                          redirect='Profile' 
-                          logout={true} 
-                          sendEmail={sendEmail} />;
+  if (success) return (
+    <ModalInfo label='Successful update!' to='/login' buttonText='Confirm' time={160000} >
+      {auth.email === form.email.value
+        ? <div>
+            <p>You will be logged out in a moment and redirected to the login page!</p>
+          </div>
+        : <div>
+            <p className='mb-1'>We sent to you an authorization link. Click the link and update your profile.</p>
+            <p className='mb-1'>Your profile will only be updated if you click the link.</p>
+            <p>You will be logged out in a moment and redirected to the login page!</p>
+          </div>
+      }
+    </ModalInfo>
+  );
 
-  return auth 
-    ? <div>
-        {resError
-          ? <div className='alert alert-danger py-3'>{resError}</div>
-          : null 
-        }
-        <form noValidate onSubmit={e => e.preventDefault()}>
-          <div className='mb-3'>
-            <label className='form-label'>Email</label>
-            <input 
-              value={form.email.value}
-              onChange={e => changeHandler(form, setForm, e.target.value, 'email')}
-              type='email' 
-              className={`form-control 
-                ${form.email.error 
-                  ? (form.email.showError ? 'is-invalid' : '')
-                  : (form.email.value && form.email.showError ? 'is-valid' : '')}`} />
-            <div className='invalid-feedback mt-2'>
-              {form.email.error} 
-            </div>
+  return (
+    <div>
+      {resError
+        ? <div className='alert alert-danger py-3'>{resError}</div>
+        : null 
+      }
+      <form noValidate onSubmit={e => e.preventDefault()}>
+        <div className='mb-3'>
+          <label className='form-label'>Email</label>
+          <input 
+            value={form.email.value}
+            onChange={e => changeHandler(form, setForm, e.target.value, 'email')}
+            type='email' 
+            className={`form-control 
+              ${form.email.error 
+                ? (form.email.showError ? 'is-invalid' : '')
+                : (form.email.value && form.email.showError ? 'is-valid' : '')}`} />
+          <div className='invalid-feedback mt-2'>
+            {form.email.error} 
           </div>
-          <div className='mb-3'>
-            <label className='form-label'>Password</label>
-            <input 
-              value={form.password.value}
-              onChange={e => changeHandler(form, setForm, e.target.value, 'password')}
-              type='password' 
-              className={`form-control 
-                ${form.password.error 
-                  ? (form.password.showError ? 'is-invalid' : '')
-                  : (form.password.value ? 'is-valid' : '')}`} />
-            <div className='invalid-feedback mt-2'>
-              {form.password.error} 
-            </div>
+        </div>
+        <div className='mb-3'>
+          <label className='form-label'>Password</label>
+          <input 
+            value={form.password.value}
+            onChange={e => changeHandler(form, setForm, e.target.value, 'password')}
+            type='password' 
+            className={`form-control 
+              ${form.password.error 
+                ? (form.password.showError ? 'is-invalid' : '')
+                : (form.password.value ? 'is-valid' : '')}`} />
+          <div className='invalid-feedback mt-2'>
+            {form.password.error} 
           </div>
-          <ModalButton loading={loading} disabled={!checkValid(form)} onSubmit={submit}>Save</ModalButton>
-        </form>
-      </div>
-    : <Redirect to='/' /> 
+        </div>
+        <ModalButton loading={loading} disabled={!checkValid(form)} onSubmit={submit}>Save</ModalButton>
+      </form>
+    </div>
+  );
 };
 
 export default ProfileDetails;

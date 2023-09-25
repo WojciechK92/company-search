@@ -48,7 +48,7 @@ function App() {
         <Switch>
           <AuthenticatedRoute path='/profile/companies/add' component={AddCompany} />
           <AuthenticatedRoute path='/profile/companies/edit/:id' component={EditCompany} />
-          <Route path='/profile' component={Profile} />
+          <AuthenticatedRoute path='/profile' component={Profile} />
           <Route path='/register' component={Register} />
           <Route path='/login' component={Login} />
           <Route path='/search' exact>

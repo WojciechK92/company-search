@@ -90,7 +90,7 @@ function Company() {
             <div className='row align-items-center gap-2 gap-md-0'>
               <div className='col-12 col-md-6'>
                 <img 
-                  src={`https://picsum.photos/id/${Math.floor(Math.random() * 100)}/650/400`}
+                  src={`https://picsum.photos/id/${Math.floor(Math.random() * 50)}/650/400`}
                   alt='company-logo'
                   className='img-thumbnail' />
               </div>

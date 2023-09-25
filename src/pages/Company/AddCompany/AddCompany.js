@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import axios from '../../../axios';
-import SuccessMessage from '../../../components/Other/SuccessMessage/SuccessMessage';
+import ModalInfo from '../../../components/UI/ModalInfo/ModalInfo';
 import CompanyForm from '../CompanyForm';
 import useWebTitle from '../../../hooks/useWebsiteTitle';
 
@@ -15,7 +15,9 @@ function AddCompany() {
   };
 
   return success
-    ? <SuccessMessage to='/profile/companies' redirect='My companies' />
+    ? <ModalInfo to='/profile/companies' label='Successful!' time={3000} >
+        <p>You will be redirected to the my companies page!</p>
+      </ModalInfo>
     : <CompanyForm 
       label='Add company' 
       buttonText='Add'

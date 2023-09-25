@@ -2,10 +2,10 @@ import { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 import AuthForm from './AuthForm';
-import SuccessMessage from '../../components/Other/SuccessMessage/SuccessMessage';
 import useWebTitle from '../../hooks/useWebsiteTitle';
 import app from '../../firebase';
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import ModalInfo from '../../components/UI/ModalInfo/ModalInfo';
 
 function Register() {
   
@@ -16,12 +16,16 @@ function Register() {
   const submit = async (data) => {
     // register 
     const authFirebase = getAuth(app);
-    await createUserWithEmailAndPassword(authFirebase, data.email, data.password)
+    await createUserWithEmailAndPassword(authFirebase, data.email, data.password);
 
     setSuccess(true);
   };
 
-  if (success) return <SuccessMessage to='/login' redirect='Login page' />
+  if (success) return (
+    <ModalInfo label='Successful registration!' to='/login' time={3000}>
+      <p>You will be redirected to the login page.</p>
+    </ModalInfo>
+  );
 
   return auth 
     ? <Redirect to='/' /> 

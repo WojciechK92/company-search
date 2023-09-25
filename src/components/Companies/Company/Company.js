@@ -13,7 +13,7 @@ function Company(props) {
         <div className='row'>
           <div className='col-5 col-md-4 align-self-center'>
             <img 
-              src={`https://picsum.photos/id/${Math.floor(Math.random() * 100)}/450/300`}
+              src={`https://picsum.photos/id/${Math.floor(Math.random() * 50)}/450/300`}
               alt='company-logo'
               className='img-thumbnail' />
           </div>
