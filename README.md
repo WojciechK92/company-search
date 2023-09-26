@@ -1,70 +1,212 @@
-# Getting Started with Create React App
+# Company Search
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Table of Contents
+* [General Info](#general-info)
+* [Website with Project](#website-with-project)
+* [Tech Stack](#tech-stack)
+* [Collaboration and Project Management](#collaboration-and-project-management)
+* [Run Localy](#run-locally)
+* [Environment Variables](#environment-variables)
+* [Features](#features)
+* [Used Libraries with Examples](#used-libraries-with-examples)
+* [React Technology Implementation with Examples](#react-technology-implementation-with-examples)
+* [Licenses](#licenses)
 
-In the project directory, you can run:
 
-### `npm start`
+## General Info
+This project is a simple website designed for business owners and their current or prospective employees. 
+By registering on the site, an employer has the opportunity to add their company to the database, specify whether a recruitment process is currently underway, and what benefits await future employees. 
+An employee registering on the site can browse the list of companies or rate their employer’s company.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Website with Project
+```
+https://company-search-58307.web.app/
+```
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Tech Stack
+**Client:** React 17.0.1, Bootstrap 5.3.1
 
-### `npm run build`
+**Server:** Hosted on Firebase
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+**Database:** Firebase (Firebase SDK: 10.4.0)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Collaboration and Project Management
+During the project, two GitHub accounts were used to simulate group work. The main assumption of this approach was to practice sending pull requests, updating branches and resolving conflicts.
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Run Locally
+Clone the project  
+```bash
+  git clone https://github.com/WojciechK92/company-search.git
+```
+Go to the project directory
+```bash
+  cd company-search
+```
+Install dependencies
+```bash
+  npm install
+```
+Start the server
+```bash
+  npm run start
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Environment Variables
+To run this project, you need to add the following environment variables to your .env file. You can find them in your web app’s Firebase configuration:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+`const firebaseConfig = {`
 
-## Learn More
+    apiKey: REACT_APP_AUTH_KEY,
+    authDomain: REACT_APP_AUTH_DOMAIN,
+    databaseURL: REACT_APP_DATABASE,
+    projectId: REACT_APP_PROJECT_ID,
+    storageBucket: REACT_APP_STORAGE_BUCKET,
+    messagingSenderId: REACT_APP_MESSAGING_SENDER_ID,
+    appId: REACT_APP_ID,
+  
+`};`
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Features
+1. Responsiveness  
+The website is fully responsive. You can use it on a mobile device and a PC.
 
-### Code Splitting
+2. Authentication  
+User authentication consists of the registration, login and profile update pages. 
+All forms include email and password validation. Additionally, until the form is completed correctly, the button is blocked.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+![Login page](images/login_page.png)
 
-### Analyzing the Bundle Size
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Updating the user profile requires re-authorization by entering the current password.
 
-### Making a Progressive Web App
+![Confirm auth](images/confirm_auth.png)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
 
-### Advanced Configuration
+3. Searchbar and theme button  
+The page header contains a search bar and a theme button. 
+The search engine searches the entire company collection and displays the results sorted by name. 
+The theme button changes the colors of the buttons on the page.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+![Search bar](images/searchbar.png)
 
-### Deployment
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+4. Special offer  
+A user who visits the website for the first time can register cheaper.
+The form disappears after time expires or after the user registers.
 
-### `npm run build` fails to minify
+![Special offer](images/special_offer.png)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+5. Recently viewed company  
+If the user has already visited the address of a company, it will be displayed on the home page.
+The user can visit the last visited company or turn off the window.
+
+![Recently viewed company](images/recently_viewed.png)
+
+
+6. My companies  
+The user can add, edit or delete companies created by him.
+Add and edit companies forms include data validation.
+
+![My companies](images/my_companies.png)
+
+
+7. Connection to database  
+If connection was successful the modal will be displayed.
+
+![Successful connection](images/modal.png)
+
+
+## Used Libraries with Examples
+1. Bootstrap
+- [src/index.js](https://github.com/WojciechK92/company-search/blob/4e29140f8313db5622c5c9ee28644f666ead6b51/src/index.js)
+- [src/pages/Auth/AuthForm.js](https://github.com/WojciechK92/company-search/blob/4e29140f8313db5622c5c9ee28644f666ead6b51/src/pages/Auth/AuthForm.js)
+
+2. Axios
+- [src/axios.js](https://github.com/WojciechK92/company-search/blob/4e29140f8313db5622c5c9ee28644f666ead6b51/src/axios.js)
+- [src/pages/Home/Home.js](https://github.com/WojciechK92/company-search/blob/4e29140f8313db5622c5c9ee28644f666ead6b51/src/pages/Home/Home.js)
+
+3. Firebase
+- [src/firebase.js](https://github.com/WojciechK92/company-search/blob/4e29140f8313db5622c5c9ee28644f666ead6b51/src/firebase.js)
+- [src/pages/Auth/Login.js](https://github.com/WojciechK92/company-search/blob/4e29140f8313db5622c5c9ee28644f666ead6b51/src/pages/Auth/Login.js)
+
+4. React-modal
+- [src/components/UI/ModalButton/ModalButton.js](https://github.com/WojciechK92/company-search/blob/4e29140f8313db5622c5c9ee28644f666ead6b51/src/components/UI/ModalButton/ModalButton.js)
+- [src/components/UI/ModalInfo/ModalInfo.js](https://github.com/WojciechK92/company-search/blob/4e29140f8313db5622c5c9ee28644f666ead6b51/src/components/UI/ModalInfo/ModalInfo.js)
+
+5. React-rating-stars-component
+- [src/pages/Company/Company.js](https://github.com/WojciechK92/company-search/blob/4e29140f8313db5622c5c9ee28644f666ead6b51/src/pages/Company/Company.js)
+
+6. React-router-dom
+- [src/App.js](https://github.com/WojciechK92/company-search/blob/4e29140f8313db5622c5c9ee28644f666ead6b51/src/App.js)
+- [src/components/UI/LinkButton/LinkButton.js](https://github.com/WojciechK92/company-search/blob/4e29140f8313db5622c5c9ee28644f666ead6b51/src/components/UI/LinkButton/LinkButton.js)
+
+7. Prop-types
+- [src/components/Companies/Company/Company.js](https://github.com/WojciechK92/company-search/blob/4e29140f8313db5622c5c9ee28644f666ead6b51/src/components/Companies/Company/Company.js)
+
+
+## React Technology Implementation with Examples
+1. Class component
+- [src/App.js(in the past)](https://github.com/WojciechK92/company-search/blob/63322a658701e28ebadf8cddcc12f7b3dd9c6dfa/src/App.js)
+
+2. Function component
+- [src/App.js](https://github.com/WojciechK92/company-search/blob/4e29140f8313db5622c5c9ee28644f666ead6b51/src/App.js)
+
+3. Props
+- [src/pages/Home/Home.js](https://github.com/WojciechK92/company-search/blob/4e29140f8313db5622c5c9ee28644f666ead6b51/src/pages/Home/Home.js)
+- [src/components/Companies/Company/Company.js](https://github.com/WojciechK92/company-search/blob/4e29140f8313db5622c5c9ee28644f666ead6b51/src/components/Companies/Company/Company.js)
+
+4. Composition
+- [src/components/UI/LinkButton/LinkButton.js](https://github.com/WojciechK92/company-search/blob/4e29140f8313db5622c5c9ee28644f666ead6b51/src/components/UI/LinkButton/LinkButton.js)
+
+5. UseState
+- [src/hooks/useStateStorage.js](https://github.com/WojciechK92/company-search/blob/4e29140f8313db5622c5c9ee28644f666ead6b51/src/hooks/useStateStorage.js)
+
+5. UseContext
+- [src/context/themeContext.js](https://github.com/WojciechK92/company-search/blob/4e29140f8313db5622c5c9ee28644f666ead6b51/src/context/themeContext.js)
+- [src/App.js](https://github.com/WojciechK92/company-search/blob/4e29140f8313db5622c5c9ee28644f666ead6b51/src/App.js)
+- [src/components/UI/SearchBar/SearchBar.js](https://github.com/WojciechK92/company-search/blob/4e29140f8313db5622c5c9ee28644f666ead6b51/src/components/UI/SearchBar/SearchBar.js)
+
+6. UseReducer
+- [src/reducer.js](https://github.com/WojciechK92/company-search/blob/4e29140f8313db5622c5c9ee28644f666ead6b51/src/reducer.js)
+- [src/App.js](https://github.com/WojciechK92/company-search/blob/4e29140f8313db5622c5c9ee28644f666ead6b51/src/App.js)
+- [src/hooks/useAuth.js](https://github.com/WojciechK92/company-search/blob/4e29140f8313db5622c5c9ee28644f666ead6b51/src/hooks/useAuth.js)
+
+7. Higher-Order Component
+- [src/hoc/withMouseEffect.js](https://github.com/WojciechK92/company-search/blob/4e29140f8313db5622c5c9ee28644f666ead6b51/src/hoc/withMouseEffect.js)
+- [src/hoc/ErrorBoundary.js](https://github.com/WojciechK92/company-search/blob/4e29140f8313db5622c5c9ee28644f666ead6b51/src/hoc/ErrorBoundary.js)
+
+8. UseEffect, useEffect with cleanup
+- [src/pages/Home/Home.js](https://github.com/WojciechK92/company-search/blob/4e29140f8313db5622c5c9ee28644f666ead6b51/src/pages/Home/Home.js)
+- [src/components/Other/Timer/Timer.js](https://github.com/WojciechK92/company-search/blob/4e29140f8313db5622c5c9ee28644f666ead6b51/src/components/Other/Timer/Timer.js)
+
+9. UseRef
+- [src/components/UI/ModalInfo/ModalInfo.js](https://github.com/WojciechK92/company-search/blob/4e29140f8313db5622c5c9ee28644f666ead6b51/src/components/UI/ModalInfo/ModalInfo.js)
+
+9. My hooks 
+- [src/hooks/useStateStorage.js](https://github.com/WojciechK92/company-search/blob/4e29140f8313db5622c5c9ee28644f666ead6b51/src/hooks/useStateStorage.js)
+- [src/hooks/useAuth.js](https://github.com/WojciechK92/company-search/blob/4e29140f8313db5622c5c9ee28644f666ead6b51/src/hooks/useAuth.js)
+
+10. Error boundary
+- [src/hoc/ErrorBoundary.js](https://github.com/WojciechK92/company-search/blob/4e29140f8313db5622c5c9ee28644f666ead6b51/src/hoc/ErrorBoundary.js)
+
+11. Lazy
+- [src/App.js](https://github.com/WojciechK92/company-search/blob/4e29140f8313db5622c5c9ee28644f666ead6b51/src/App.js)
+
+
+## Licenses
+1. Photos  
+The photos used in this project come from two sources. Photos shared there can be freely published:
+- [Unsplash](https://unsplash.com)
+- [Picsum](https://picsum.photos)
+
+2. Access to the data  
+I would like to provide recruiters with free access to data in this project. Please remember that any information contained in this project is intended for recruitment purposes only and should not be used in any other way without my express consent.
+
